@@ -17,33 +17,37 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
     }
 
-    public void onLoginButtonCliked(View view){
+    public void onLoginButtonClicked(View view){
         String name = ((EditText)findViewById(R.id.name_editText)).getText().toString();
         String id = ((EditText)findViewById(R.id.id_editText)).getText().toString();
         String pw = ((EditText)findViewById(R.id.pw_editText)).getText().toString();
         String phone_num = ((EditText)findViewById(R.id.phone_editText)).getText().toString();
+
 
         if (name.isEmpty() || id.isEmpty() || pw.isEmpty() || phone_num.isEmpty())
         {
             Toast.makeText(this, "로그인 정보를 전부 입력해주세요", Toast.LENGTH_SHORT).show();
             return;
         }
-        else {
+        else
+        {
             if(isValidUser(id, pw))
             {
-                //go to managing_list
+                //1. send log to DB
+                //2. go to managing_list
             }
             else
-            {
-                //fail to log in
+            {//fail to log in
                 final AlertDialog.Builder login_fail = new AlertDialog.Builder(this);
                 login_fail.setTitle("로그인 실패");
                 login_fail.setMessage("로그인에 실패하였습니다. 입력하신 정보를 확인해주세요");
                 login_fail.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();
                     }
+
                 });
 
                 login_fail.show();

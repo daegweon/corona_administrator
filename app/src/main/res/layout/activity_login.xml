@@ -1,190 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#FAFAFA"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
-        android:background="@drawable/login_title_background"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:text="자가격리자 전담공무원"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.064" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FAFAFA"
+        tools:context=".MainActivity">
 
-
-    <TextView
-        android:id="@+id/login_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:text="로그인"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        />
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:background="@drawable/login_title_background"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:text="자가격리자 전담공무원"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.064" />
 
 
-    <ImageView
-        android:id="@+id/rect_img"
-        android:layout_width="50dp"
-        android:layout_height="4dp"
-        app:layout_constraintEnd_toEndOf="@+id/login_text"
-        app:layout_constraintStart_toStartOf="@+id/login_text"
-        app:layout_constraintTop_toBottomOf="@+id/login_text"
-        app:srcCompat="@drawable/login_rectangle" />
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="48dp"
+            android:gravity="center"
+            android:text="로그인"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            app:layout_constraintHorizontal_bias="0.5"
+            />
 
 
-    <TextView
-        android:id="@+id/name_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:text="성명"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_text" />
+        <ImageView
+            android:id="@+id/rect_img"
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            app:layout_constraintEnd_toEndOf="@+id/login_text"
+            app:layout_constraintStart_toStartOf="@+id/login_text"
+            app:layout_constraintTop_toBottomOf="@+id/login_text"
+            app:srcCompat="@drawable/login_rectangle" />
 
 
-    <EditText
-        android:id="@+id/name_editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
-        android:layout_marginRight="4dp"
-        android:background="@drawable/login_text_background"
-        android:gravity="center"
-        android:hint="ex) 홍길동"
-        android:inputType="textPersonName"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@+id/title_text"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/name_text"
-        app:layout_constraintTop_toBottomOf="@+id/name_text" />
+        <TextView
+            android:id="@+id/name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:layout_marginLeft="36dp"
+            android:text="성명"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_text" />
 
 
-    <TextView
-        android:id="@+id/id_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="전담공무원ID"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/name_editText"
-        app:layout_constraintTop_toBottomOf="@+id/name_editText" />
+        <EditText
+            android:id="@+id/name_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:layout_marginRight="4dp"
+            android:background="@drawable/login_text_background"
+            android:gravity="center"
+            android:hint="ex) 홍길동"
+            android:inputType="textPersonName"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@+id/title_text"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/name_text"
+            app:layout_constraintTop_toBottomOf="@+id/name_text" />
 
 
-    <EditText
-        android:id="@+id/id_editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_text_background"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="6자리 입력"
-        android:inputType="textShortMessage"
-        android:maxLength="6"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@+id/name_editText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/id_text"
-        app:layout_constraintTop_toBottomOf="@+id/id_text" />
+        <TextView
+            android:id="@+id/id_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="전담공무원ID"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/name_editText"
+            app:layout_constraintTop_toBottomOf="@+id/name_editText" />
 
 
-    <TextView
-        android:id="@+id/pw_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="비밀번호"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/id_editText"
-        app:layout_constraintTop_toBottomOf="@+id/id_editText" />
-
-    <EditText
-        android:id="@+id/pw_editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_text_background"
-        android:ems="10"
-        android:gravity="center"
-        android:inputType="textPassword"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="@+id/id_editText"
-        app:layout_constraintStart_toStartOf="@+id/pw_text"
-        app:layout_constraintTop_toBottomOf="@+id/pw_text" />
+        <EditText
+            android:id="@+id/id_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_text_background"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="6자리 입력"
+            android:inputType="textShortMessage"
+            android:maxLength="6"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@+id/name_editText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/id_text"
+            app:layout_constraintTop_toBottomOf="@+id/id_text" />
 
 
-    <TextView
-        android:id="@+id/phone_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="핸드폰 번호"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintStart_toStartOf="@+id/pw_editText"
-        app:layout_constraintTop_toBottomOf="@+id/pw_editText" />
+        <TextView
+            android:id="@+id/pw_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="비밀번호"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/id_editText"
+            app:layout_constraintTop_toBottomOf="@+id/id_editText" />
+
+        <EditText
+            android:id="@+id/pw_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_text_background"
+            android:ems="10"
+            android:gravity="center"
+            android:inputType="textPassword"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@+id/id_editText"
+            app:layout_constraintStart_toStartOf="@+id/pw_text"
+            app:layout_constraintTop_toBottomOf="@+id/pw_text" />
 
 
-    <EditText
-        android:id="@+id/phone_editText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/login_text_background"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="ex) 01012345678"
-        android:inputType="number|phone"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        app:layout_constraintBottom_toTopOf="@+id/login_btn"
-        app:layout_constraintEnd_toEndOf="@+id/pw_editText"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/phone_text"
-        app:layout_constraintTop_toBottomOf="@+id/phone_text" />
+        <TextView
+            android:id="@+id/phone_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="핸드폰 번호"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="@+id/pw_editText"
+            app:layout_constraintTop_toBottomOf="@+id/pw_editText" />
 
 
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/login_btn_background"
-        android:foregroundGravity="center"
-        android:gravity="center"
-        android:onClick="onLoginButtonCliked"
-        android:text="로그인"
-        android:textColor="#2E82DA"
-        app:layout_constraintEnd_toEndOf="@+id/phone_editText"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/phone_editText"
-        app:layout_constraintTop_toBottomOf="@+id/phone_editText" />
+        <EditText
+            android:id="@+id/phone_editText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_text_background"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="ex) 01012345678"
+            android:inputType="number|phone"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            app:layout_constraintBottom_toTopOf="@+id/login_btn"
+            app:layout_constraintEnd_toEndOf="@+id/pw_editText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/phone_text"
+            app:layout_constraintTop_toBottomOf="@+id/phone_text" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/login_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:background="@drawable/login_btn_background"
+            android:foregroundGravity="center"
+            android:gravity="center"
+            android:onClick="onLoginButtonClicked"
+            android:text="로그인"
+            android:textColor="#2E82DA"
+            app:layout_constraintEnd_toEndOf="@+id/phone_editText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/phone_editText"
+            app:layout_constraintTop_toBottomOf="@+id/phone_editText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
