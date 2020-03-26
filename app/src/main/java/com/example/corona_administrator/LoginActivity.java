@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -34,8 +35,8 @@ public class LoginActivity extends AppCompatActivity {
         {
             if(isValidUser(id, pw))
             {
-                //1. send log to DB
-                //2. go to managing_list
+                Intent managing_activity = new Intent(this, ManagingActivity.class);
+                startActivity(managing_activity);
             }
             else
             {//fail to log in
@@ -57,6 +58,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean isValidUser(String id, String pw){
-        return false;
+        return true;
     }
 }
