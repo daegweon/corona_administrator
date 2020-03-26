@@ -13,7 +13,7 @@
         android:textColor="#000000"
         android:textAlignment="center"
         android:paddingTop="10dp"
-        android:text="name" />
+        android:text="@string/list_name" />
 
     <TextView
         android:id="@+id/address_txt"
@@ -24,7 +24,7 @@
         android:textColor="#000000"
         android:textAlignment="center"
         android:paddingTop="10dp"
-        android:text="address" />
+        android:text="@string/list_address" />
 
     <TextView
         android:id="@+id/state_txt"
@@ -35,5 +35,5 @@
         android:textColor="#000000"
         android:textAlignment="center"
         android:paddingTop="10dp"
-        android:text="state" />
+        android:text="@string/list_state" />
 </LinearLayout>
