@@ -1,6 +1,6 @@
 package com.example.corona_administrator;
 
-/*import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -271,4 +271,4 @@ public class ManagingActivity extends AppCompatActivity {
                 });
         return builder.create();
     }
-}*/
+}
