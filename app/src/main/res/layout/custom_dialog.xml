@@ -16,42 +16,44 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/dialog_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/custom_dialog_name"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:id="@+id/dialog_name"
-        />
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:text="@string/custom_dialog_name"
+        android:textSize="16sp" />
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/custom_dialog_birthdate"
-        android:textSize="16sp"
         android:id="@+id/dialog_birthdate"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/custom_dialog_phonenumber"
-        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:text="@string/custom_dialog_birthdate"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/dialog_phonenumber"
-        />
-    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        android:text="@string/custom_dialog_address"
-        android:textSize="16sp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:text="@string/custom_dialog_phonenumber"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/dialog_address"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:text="@string/custom_dialog_address"
+        android:textSize="16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
