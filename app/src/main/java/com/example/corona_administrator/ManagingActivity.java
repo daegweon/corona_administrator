@@ -14,12 +14,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mongodb.BasicDBObject;
+
 import com.mongodb.Block;
-import com.mongodb.Cursor;
-import com.mongodb.DBCursor;
 import com.mongodb.MongoClient;
-import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
@@ -149,6 +146,7 @@ public class ManagingActivity extends AppCompatActivity {
                 myInformationDialog.setCancelable(true);
                 myInformationDialog.show();
             }
+
         });
 
         //새로고침 버튼 클릭 이벤트 리스너
