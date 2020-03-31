@@ -16,4 +16,12 @@ public class ObjectItem {
         this.Address = Address;
         this.State = State;
     }
+
+    public String getPersonName() {
+        return this.personName ;
+    }
+
+    public String getAddress() {
+        return this.Address ;
+    }
 }
