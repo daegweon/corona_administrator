@@ -133,7 +133,7 @@ public class ManagingActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
 
-                final CharSequence search_keyword = cs.toString().toLowerCase() ;
+                final CharSequence search_keyword = cs.toString().toLowerCase();
                 new Thread(){
                     @Override
                     public void run() {
@@ -213,10 +213,11 @@ public class ManagingActivity extends AppCompatActivity {
                             } finally {
                                 cursor.close();
                             }
-                            ManagingActivity.this.runOnUiThread(updateUI);
                             }
                         }
                     }.start();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
             }
 
             @Override
