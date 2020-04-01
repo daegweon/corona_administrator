@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:weightSum="5">
 
     <TextView
@@ -9,34 +10,56 @@
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="1"
-        android:textSize = "16sp"
-        android:textColor="#000000"
-        android:textAlignment="center"
-        android:paddingTop="10dp"
+        android:gravity="center"
+        android:paddingRight="2.5dp"
         android:text="@string/list_name"
-        android:gravity="center_horizontal" />
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/address_txt"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="3"
-        android:textSize = "16sp"
-        android:textColor="#000000"
-        android:textAlignment="center"
-        android:paddingTop="10dp"
+        android:gravity="center"
+        android:paddingLeft="2.5dp"
+        android:paddingRight="2.5dp"
         android:text="@string/list_address"
-        android:gravity="center_horizontal" />
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="16sp" />
 
-    <TextView
-        android:id="@+id/state_txt"
+    <LinearLayout
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="1"
-        android:textSize = "16sp"
-        android:textColor="#000000"
-        android:textAlignment="center"
-        android:paddingTop="10dp"
-        android:text="@string/list_state"
-        android:gravity="center_horizontal" />
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="2.5dp"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/state_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/list_state"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/state_time_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/list_state_time"
+            android:textAlignment="center"
+            android:textColor="#FF0000"
+            android:textSize="16sp" />
+    </LinearLayout>
+
 </LinearLayout>

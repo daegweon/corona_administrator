@@ -110,7 +110,7 @@ public class ManagingActivity extends AppCompatActivity {
                     String personName = ObjectItemData.get(i - 1).personName;
                     String birthDate = ObjectItemData.get(i - 1).birthDate;
                     String phoneNumber = ObjectItemData.get(i - 1).phoneNumber;
-                    String Address = ObjectItemData.get(i - 1).Address;
+                    String Address = ObjectItemData.get(i - 1).address;
 
                     mCustomDialog = new CustomDialog(ManagingActivity.this, personName, birthDate, phoneNumber, Address);
                     mCustomDialog.setCancelable(true);
