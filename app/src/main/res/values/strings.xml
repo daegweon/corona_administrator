@@ -9,6 +9,7 @@
     <string name="list_name">name</string>
     <string name="list_address">address</string>
     <string name="list_state">state</string>
+    <string name="list_state_time">state_time</string>
     <string name="custom_dialog_title">격 리 자 정 보</string>
     <string name="custom_dialog_name">이름 :</string>
     <string name="custom_dialog_birthdate">생년월일 :</string>

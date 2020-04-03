@@ -48,9 +48,13 @@ public class ArrayAdapterItem extends ArrayAdapter<ObjectItem> {
         TextView name = (TextView) convertView.findViewById(R.id.name_txt);
         TextView address = (TextView) convertView.findViewById(R.id.address_txt);
         TextView state = (TextView) convertView.findViewById(R.id.state_txt);
+        TextView state_time = (TextView) convertView.findViewById(R.id.state_time_txt);
+
         name.setText(objectItem.personName);
-        address.setText(objectItem.Address);
-        state.setText(objectItem.State);
+        address.setText(objectItem.address);
+        state.setText(objectItem.state);
+        state_time.setText(objectItem.state_time);
+
         return convertView;
     }
 

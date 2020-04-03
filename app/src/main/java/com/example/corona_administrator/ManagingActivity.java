@@ -12,6 +12,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,7 +117,7 @@ public class ManagingActivity extends AppCompatActivity {
                     String personName = ObjectItemData.get(i - 1).personName;
                     String birthDate = ObjectItemData.get(i - 1).birthDate;
                     String phoneNumber = ObjectItemData.get(i - 1).phoneNumber;
-                    String Address = ObjectItemData.get(i - 1).Address;
+                    String Address = ObjectItemData.get(i - 1).address;
 
                     mCustomDialog = new CustomDialog(ManagingActivity.this, personName, birthDate, phoneNumber, Address);
                     mCustomDialog.setCancelable(true);
