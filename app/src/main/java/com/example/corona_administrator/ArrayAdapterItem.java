@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import java.util.Vector;
@@ -52,4 +53,7 @@ public class ArrayAdapterItem extends ArrayAdapter<ObjectItem> {
         state.setText(objectItem.State);
         return convertView;
     }
+
+
+
 }
