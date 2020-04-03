@@ -36,6 +36,6 @@ public class ObjectItem {
     }
 
     public String getAddress() {
-        return this.Address ;
+        return this.address ;
     }
 }
