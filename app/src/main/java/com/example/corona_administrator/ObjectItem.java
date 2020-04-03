@@ -30,4 +30,12 @@ public class ObjectItem {
             state_time = timeOver[random.nextInt(timeOverSize)];
         }
     }
+
+    public String getPersonName() {
+        return this.personName ;
+    }
+
+    public String getAddress() {
+        return this.Address ;
+    }
 }

@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -62,6 +64,10 @@ public class ManagingActivity extends AppCompatActivity {
         final TextView num_of_isolated = findViewById(R.id.num_of_isolated); //자가격리자수 표기 텍스트
         ListView listview = (ListView)findViewById(R.id.listview1) ; //자가격리자 정보 리스트
         View header = getLayoutInflater().inflate(R.layout.listview_header, null, false) ; //리스트뷰 헤더 (이름, 격리주소, 격리지역 이탈여부)
+
+        // 검색 텍스트
+        EditText inputSearch = (EditText) findViewById(R.id.inputSearch);
+
 
         listview.addHeaderView(header);
 
@@ -121,6 +127,114 @@ public class ManagingActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //edit text에 정보를 입력할 때
+        inputSearch.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void onTextChanged(CharSequence cs, int arg1, int arg2, int arg3) {
+
+                final CharSequence search_keyword = cs.toString().toLowerCase();
+                new Thread(){
+                    @Override
+                    public void run() {
+                        Block<Document> printBlock = new Block<Document>() {
+                            @Override
+                            public void apply(final Document document) {
+                                String str_state = "";
+                                switch (document.getInteger("state")){
+                                    case 1:
+                                        str_state = "정상";
+                                        break;
+                                    case 2:
+                                        str_state = "통신안됨";
+                                        break;
+                                    case 3:
+                                        str_state = "이탈";
+                                        break;
+                                }
+                                ObjectItem item = new ObjectItem(document.getString("name"),document.getString("birthdate"),document.getString("phone_number"),document.getString("address"),str_state);
+                                addItem(item);
+                            }
+                        };
+                        MongoCollection<Document> collection = database.getCollection("isolated_people");
+                        ObjectItemData.clear();
+                        if(search_keyword.toString().equals("")){ //전체 리스트
+                            MongoCursor<Document> cursor = collection.find().iterator();
+                            try {
+                                while (cursor.hasNext()) {
+                                    Document currentDoc = cursor.next();
+                                    String str_state = "";
+                                    switch (currentDoc.getInteger("state")){
+                                        case 1:
+                                            str_state = "정상";
+                                            break;
+                                        case 2:
+                                            str_state = "통신안됨";
+                                            break;
+                                        case 3:
+                                            str_state = "이탈";
+                                            break;
+                                    }
+                                    ObjectItem item = new ObjectItem(currentDoc.getString("name"),currentDoc.getString("birthdate"),currentDoc.getString("phone_number"),currentDoc.getString("address"),str_state);
+                                    addItem(item);
+                                }
+                            } finally {
+                                cursor.close();
+                            }
+                        }
+                        else { //필터링
+                            MongoCursor<Document> cursor = collection.find().iterator();
+                            try {
+                                while (cursor.hasNext()) {
+                                    Document currentDoc = cursor.next();
+                                    String str_state = "";
+
+                                    //필터링이 이루어지는 부분
+                                    String cur_name = currentDoc.getString("name").toLowerCase();
+                                    String cur_address = currentDoc.getString("address").toLowerCase();
+
+                                    if(cur_name.contains(search_keyword) || cur_address.contains(search_keyword)){
+                                        //필터링된 결과물 한 행 반영
+                                        switch (currentDoc.getInteger("state")){
+                                            case 1:
+                                                str_state = "정상";
+                                                break;
+                                            case 2:
+                                                str_state = "통신안됨";
+                                                break;
+                                            case 3:
+                                                str_state = "이탈";
+                                                break;
+                                        }
+                                        ObjectItem item = new ObjectItem(currentDoc.getString("name"),currentDoc.getString("birthdate"),currentDoc.getString("phone_number"),currentDoc.getString("address"),str_state);
+                                        addItem(item);
+                                    }
+                                }
+                            } finally {
+                                cursor.close();
+                            }
+                            }
+                        }
+                    }.start();
+                adapter.clear();
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                          int arg3) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                // TODO Auto-generated method stub
+            }
+        });
+
+
     }
 
     @Override
