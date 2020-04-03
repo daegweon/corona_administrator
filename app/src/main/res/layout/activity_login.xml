@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#FAFAFA"
@@ -86,6 +86,7 @@
             android:inputType="textPersonName"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:text="김동현"
             app:layout_constraintEnd_toEndOf="@+id/title_text"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/name_text"
@@ -115,6 +116,7 @@
             android:maxLength="6"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:text="123456"
             app:layout_constraintEnd_toEndOf="@+id/name_editText"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/id_text"
@@ -141,6 +143,7 @@
             android:inputType="textPassword"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:text="123456"
             app:layout_constraintEnd_toEndOf="@+id/id_editText"
             app:layout_constraintStart_toStartOf="@+id/pw_text"
             app:layout_constraintTop_toBottomOf="@+id/pw_text" />
@@ -168,6 +171,7 @@
             android:inputType="number|phone"
             android:selectAllOnFocus="true"
             android:singleLine="true"
+            android:text="01066652414"
             app:layout_constraintBottom_toTopOf="@+id/login_btn"
             app:layout_constraintEnd_toEndOf="@+id/pw_editText"
             app:layout_constraintHorizontal_bias="0.0"

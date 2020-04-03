@@ -5,14 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.mongodb.Block;
 import com.mongodb.MongoClient;
@@ -58,7 +59,7 @@ public class ManagingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing);
 
-        final TextView num_of_isolated = (TextView)findViewById(R.id.num_of_isolated); //자가격리자수 표기 텍스트
+        final TextView num_of_isolated = findViewById(R.id.num_of_isolated); //자가격리자수 표기 텍스트
         ListView listview = (ListView)findViewById(R.id.listview1) ; //자가격리자 정보 리스트
         View header = getLayoutInflater().inflate(R.layout.listview_header, null, false) ; //리스트뷰 헤더 (이름, 격리주소, 격리지역 이탈여부)
 
@@ -125,9 +126,28 @@ public class ManagingActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        Button my_inform_btn = (Button)findViewById(R.id.myinform_btn); // 나의 정보
         Button refresh_btn = (Button)findViewById(R.id.refresh_btn); //새로고침 버튼
         final TextView num_of_isolated = (TextView)findViewById(R.id.num_of_isolated); //격리자 수
         final TextView state_header_txt = (TextView)findViewById(R.id.state_header_txt); //격리지역 이탈여부
+
+        //나의 정보 버튼 클릭 이벤트 리스너
+        my_inform_btn.setOnClickListener(new Button.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+
+                String id = intent.getStringExtra("id");
+                String name = intent.getStringExtra("name");
+                String phone_num = intent.getStringExtra("phone_num");
+
+                MyInformationDialog myInformationDialog = new MyInformationDialog(ManagingActivity.this, id, name, phone_num);
+                myInformationDialog.setCancelable(true);
+                myInformationDialog.show();
+            }
+
+        });
 
         //새로고침 버튼 클릭 이벤트 리스너
         refresh_btn.setOnClickListener(new Button.OnClickListener(){
@@ -162,7 +182,7 @@ public class ManagingActivity extends AppCompatActivity {
                             cursor.close();
                         }
                     }
-                }.start();
+                } .start();
                 adapter.clear();
                 adapter.notifyDataSetChanged();
                 Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT).show(); //새로고침 완료 시 토스트 메세지
