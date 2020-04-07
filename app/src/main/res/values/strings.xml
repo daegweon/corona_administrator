@@ -31,4 +31,5 @@
     <string name="activity_login_phonenumber_hint">ex) 01012345678</string>
     <string name="activity_login_loginbutton">로그인</string>
     <string name="search_hint">이름이나 주소로 검색</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
