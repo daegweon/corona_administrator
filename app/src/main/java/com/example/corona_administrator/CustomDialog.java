@@ -24,6 +24,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
     private String birthDate;
     private SpannableString phoneNumberText; // 전화 바로 걸기 링크를 위한 전화번호 : 010-XXXX_XXXX
     private String phoneNumber; // 순수 전화번호
+    private SpannableString to_map; //지도 보기
 
     public CustomDialog(Context context, String personName, String birthDate,  String phoneNumber, String address) {
         super(context);
@@ -33,6 +34,7 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
         this.phoneNumberText = SpannableString.valueOf("전화번호 : "+phoneNumber);
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.to_map = SpannableString.valueOf("지도 보기");
     }
 
     @Override
@@ -43,10 +45,13 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
         btn_ok = (TextView) findViewById(R.id.btn_ok);
         btn_ok.setOnClickListener(this);
 
+
         TextView dialog_name = (TextView)findViewById(R.id.dialog_name);
         TextView dialog_birthdate = (TextView)findViewById(R.id.dialog_birthdate);
         TextView dialog_phonenumber = (TextView)findViewById(R.id.dialog_phonenumber);
         TextView dialog_address = (TextView)findViewById(R.id.dialog_address);
+        // 지도 보기 텍스트뷰
+        TextView dialog_to_map = (TextView)findViewById(R.id.dialog_to_map);
 
         //격리자정보 다이얼로그 화면 구성//
         dialog_name.setText("이름 : "+personName);
@@ -69,11 +74,38 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
                 ds.setUnderlineText(true);
             }
         };
+
+        ClickableSpan clickableSpan2 = new ClickableSpan() {
+            @Override
+            public void onClick(View view) {
+                //지도 보기 클릭 시 map activity로 주소 가지고 넘겨주기//
+                Intent intent = new Intent(mContext, MapsActivity.class);
+                intent.putExtra("quarantine_address", address);
+                mContext.startActivity(intent);
+
+            }
+
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setColor(Color.BLUE);
+                ds.setUnderlineText(true);
+            }
+        };
+
+
         //전화번호 클릭할 수 있게 설정하는 부분//
         phoneNumberText.setSpan(clickableSpan1,7,phoneNumberText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         dialog_phonenumber.setText(phoneNumberText);
         dialog_phonenumber.setMovementMethod(LinkMovementMethod.getInstance());
         dialog_phonenumber.setHighlightColor(Color.TRANSPARENT);
+
+
+        //지도 보기 클릭할 수 있게 설정하는 부분//
+        to_map.setSpan(clickableSpan2,0,to_map.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        dialog_to_map.setText(to_map);
+        dialog_to_map.setMovementMethod(LinkMovementMethod.getInstance());
+        dialog_to_map.setHighlightColor(Color.TRANSPARENT);
+
     }
 
     //격리자정보 다이얼로그에서 OK버튼 클릭 시 닫힘//

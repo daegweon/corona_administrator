@@ -55,6 +55,17 @@
         android:text="@string/custom_dialog_address"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/dialog_to_map"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="8dp"
+        android:text="@string/view_map"
+        android:textSize="16sp" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
