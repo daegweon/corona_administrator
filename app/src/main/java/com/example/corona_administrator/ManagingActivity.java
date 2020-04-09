@@ -63,7 +63,7 @@ public class ManagingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_managing);
 
         final TextView num_of_isolated = findViewById(R.id.num_of_isolated); //자가격리자수 표기 텍스트
-        ListView listview = (ListView)findViewById(R.id.listview1) ; //자가격리자 정보 리스트
+        ListView listview = (ListView)findViewById(R.id.list_view) ; //자가격리자 정보 리스트
         View header = getLayoutInflater().inflate(R.layout.listview_header, null, false) ; //리스트뷰 헤더 (이름, 격리주소, 격리지역 이탈여부)
 
         // 검색 텍스트
@@ -244,7 +244,7 @@ public class ManagingActivity extends AppCompatActivity {
         Button my_inform_btn = (Button)findViewById(R.id.myinform_btn); // 나의 정보
         Button refresh_btn = (Button)findViewById(R.id.refresh_btn); //새로고침 버튼
         final TextView num_of_isolated = (TextView)findViewById(R.id.num_of_isolated); //격리자 수
-        final TextView state_header_txt = (TextView)findViewById(R.id.state_header_txt); //격리지역 이탈여부
+        final TextView state_header_txt = (TextView)findViewById(R.id.state_header); //격리지역 이탈여부
 
         //나의 정보 버튼 클릭 이벤트 리스너
         my_inform_btn.setOnClickListener(new Button.OnClickListener(){

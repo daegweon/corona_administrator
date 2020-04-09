@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements Button.OnClickListener{
     private String name, id, pw, phone_num;
 
     @Override
@@ -22,57 +22,64 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         Button login_btn = findViewById(R.id.login_btn);
-        login_btn.setOnClickListener(new Button.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                name = ((EditText)findViewById(R.id.name_editText)).getText().toString();
-                id = ((EditText)findViewById(R.id.id_editText)).getText().toString();
-                pw = ((EditText)findViewById(R.id.pw_editText)).getText().toString();
-                phone_num = ((EditText)findViewById(R.id.phone_editText)).getText().toString();
-
-
-                if (name.isEmpty() || id.isEmpty() || pw.isEmpty() || phone_num.isEmpty())
-                {
-                    Toast.makeText(getApplicationContext(), "로그인 정보를 전부 입력해주세요", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-
-                if(isValidUser())
-                {
-                    Intent managing_activity = new Intent(getApplicationContext(), ManagingActivity.class);
-
-                    managing_activity.putExtra("name", name);
-                    managing_activity.putExtra("id", id);
-                    managing_activity.putExtra("phone_num", phone_num);
-
-                    startActivity(managing_activity);
-                    finish();
-                }
-
-                else
-                {//fail to log in
-                    AlertDialog.Builder login_fail = new AlertDialog.Builder(getApplicationContext());
-                    login_fail.setTitle("로그인 실패");
-                    login_fail.setMessage("로그인에 실패하였습니다. 입력하신 정보를 확인해주세요");
-                    login_fail.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-
-                    });
-
-                    login_fail.show();
-                }
-            }
-        });
+        login_btn.setOnClickListener(this);
     }
 
     //수정필요
     private boolean isValidUser(){
         return true;
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        name = ((EditText)findViewById(R.id.name_editText)).getText().toString();
+        id = ((EditText)findViewById(R.id.id_editText)).getText().toString();
+        pw = ((EditText)findViewById(R.id.pw_editText)).getText().toString();
+        phone_num = ((EditText)findViewById(R.id.phone_editText)).getText().toString();
+
+
+        if (name.isEmpty() || id.isEmpty() || pw.isEmpty() || phone_num.isEmpty())
+        {
+            Toast.makeText(getApplicationContext(), "로그인 정보를 전부 입력해주세요", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        if(isValidUser())
+        {
+            /*Intent managing_activity = new Intent(getApplicationContext(), ManagingActivity.class);
+
+            managing_activity.putExtra("name", name);
+            managing_activity.putExtra("id", id);
+            managing_activity.putExtra("phone_num", phone_num);
+
+            startActivity(managing_activity);*/
+            Intent myManagingActivity = new Intent(getApplicationContext(), MyManagingActivity.class);
+
+            myManagingActivity.putExtra("name", name);
+            myManagingActivity.putExtra("id", id);
+            myManagingActivity.putExtra("phone_num", phone_num);
+
+            startActivity(myManagingActivity);
+            finish();
+        }
+
+        else
+        {//fail to log in
+            AlertDialog.Builder login_fail = new AlertDialog.Builder(getApplicationContext());
+            login_fail.setTitle("로그인 실패");
+            login_fail.setMessage("로그인에 실패하였습니다. 입력하신 정보를 확인해주세요");
+            login_fail.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+
+            });
+
+            login_fail.show();
+        }
     }
 }

@@ -11,6 +11,11 @@
         android:roundIcon="@mipmap/ic_corona_administrator_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/API_KEY" />
+
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,7 +23,9 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".ManagingActivity" />
+        <activity
+            android:name=".MyManagingActivity"
+            android:windowSoftInputMode="adjustPan" />
     </application>
 
 </manifest>

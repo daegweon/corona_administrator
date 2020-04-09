@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/name_header"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="1"
@@ -17,7 +17,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/address_header"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="3"
@@ -27,7 +27,7 @@
         android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/state_header_txt"
+        android:id="@+id/state_header"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_weight="1"

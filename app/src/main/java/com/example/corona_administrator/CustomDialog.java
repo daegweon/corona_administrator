@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -14,10 +15,15 @@ import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
 //reference : https://re-build.tistory.com/27
 
 public class CustomDialog extends Dialog implements View.OnClickListener {
+
     private Context mContext;
+    //private TextView btn_location;
     private TextView btn_ok;
     private String personName;
     private String address;
@@ -40,7 +46,9 @@ public class CustomDialog extends Dialog implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_dialog);
 
+        //btn_location = (TextView) findViewById(R.id.btn_location);
         btn_ok = (TextView) findViewById(R.id.btn_ok);
+        //btn_location.setOnClickListener(this);
         btn_ok.setOnClickListener(this);
 
         TextView dialog_name = (TextView)findViewById(R.id.dialog_name);

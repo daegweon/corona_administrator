@@ -2,12 +2,12 @@ package com.example.corona_administrator;
 
 import java.util.Random;
 
-public class ObjectItem {
+public class Person {
     private static String[] timeOver = new String[]{"5분 이하", "10분 이상", "30분 이상", "1시간 이상"};
     private static final int timeOverSize = 4;
     private static Random random = new Random();
 
-    public String personName;
+    public String name;
     public String birthDate;
     public String phoneNumber;
     public String address;
@@ -15,8 +15,8 @@ public class ObjectItem {
     public String state_time = "";
 
     // constructor
-    public ObjectItem(String personName, String birthDate, String phoneNumber, String address, String state) {
-        this.personName = personName;
+    public Person(String name, String birthDate, String phoneNumber, String address, String state) {
+        this.name = name;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
         this.address = address;
@@ -30,8 +30,4 @@ public class ObjectItem {
             state_time = timeOver[random.nextInt(timeOverSize)];
         }
     }
-
-    public String getPersonName() {return this.personName;}
-
-    public String getAddress() {return this.address;}
 }

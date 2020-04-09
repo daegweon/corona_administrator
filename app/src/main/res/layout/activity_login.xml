@@ -187,7 +187,6 @@
             android:background="@drawable/login_btn_background"
             android:foregroundGravity="center"
             android:gravity="center"
-            android:onClick="onLoginButtonClicked"
             android:text="@string/activity_login_loginbutton"
             android:textColor="#2E82DA"
             app:layout_constraintEnd_toEndOf="@+id/phone_editText"

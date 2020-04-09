@@ -15,6 +15,7 @@
     <string name="custom_dialog_birthdate">생년월일 :</string>
     <string name="custom_dialog_phonenumber">전화번호 :</string>
     <string name="custom_dialog_address">주소 :</string>
+    <string name="custom_dialog_location_check">위치확인</string>
     <string name="custom_dialog_exit">확인</string>
     <string name="activity_managing_refresh">새로고침</string>
     <string name="activity_managing_myinfo">나의 정보</string>
