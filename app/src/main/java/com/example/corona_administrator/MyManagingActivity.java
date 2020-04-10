@@ -198,8 +198,8 @@ public class MyManagingActivity extends AppCompatActivity {
                             state = "이탈";
                             break;
                     }
-                    Person person = new Person(currentDoc.getString("name"), currentDoc.getString("birthdate"),
-                                                currentDoc.getString("phone_number"), currentDoc.getString("address"), state);
+                    Person person = new Person(currentDoc.getString("name"), currentDoc.getString("address"), state,
+                                                currentDoc.getString("birthdate"), currentDoc.getString("phone_number"));
 
                     people.add(person);
                     runOnUiThread(notifyToAdapter);

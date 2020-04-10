@@ -7,27 +7,37 @@ public class Person {
     private static final int timeOverSize = 4;
     private static Random random = new Random();
 
-    public String name;
-    public String birthDate;
-    public String phoneNumber;
-    public String address;
-    public String state;
-    public String state_time = "";
+    private String name;
+    private String address;
+    private String state;
+    private String stateTime = "";
+    private String birthDate;
+    private String phoneNumber;
+
 
     // constructor
-    public Person(String name, String birthDate, String phoneNumber, String address, String state) {
+    public Person(String name, String address, String state, String birthDate, String phoneNumber) {
         this.name = name;
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
         this.address = address;
         this.state = state;
+
+        this.birthDate = birthDate;
+        this.phoneNumber = phoneNumber;
+
 
         checkState();
     }
 
-    public void checkState() {
+    private void checkState() {
         if (!state.equals("정상")){
-            state_time = timeOver[random.nextInt(timeOverSize)];
+            stateTime = timeOver[random.nextInt(timeOverSize)];
         }
     }
+
+    public String getName(){return this.name;}
+    public String getAddress(){return this.address;}
+    public String getState(){return this.state;}
+    public String getStateTime(){return this.stateTime;}
+    public String getBirthDate(){return this.birthDate;}
+    public String getPhoneNumber(){return this.phoneNumber;}
 }
