@@ -19,26 +19,26 @@
         android:weightSum="5">
 
         <TextView
-            android:id="@+id/isolated_people_inform_item_name"
+            android:id="@+id/people_inform_item_name"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingRight="2.5dp"
-            android:text="@string/list_name"
+            android:text="@string/people_inform_name"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/isolated_people_inform_item_address"
+            android:id="@+id/people_inform_item_address"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="3"
             android:gravity="center"
             android:paddingLeft="2.5dp"
             android:paddingRight="2.5dp"
-            android:text="@string/list_address"
+            android:text="@string/people_inform_address"
             android:textAlignment="center"
             android:textColor="#000000"
             android:textSize="16sp" />
@@ -53,23 +53,23 @@
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/isolated_people_inform_item_state"
+                android:id="@+id/people_inform_item_state"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="@string/list_state"
+                android:text="@string/people_inform_state"
                 android:textAlignment="center"
                 android:textColor="#000000"
                 android:textSize="16sp" />
 
             <TextView
-                android:id="@+id/isolated_people_inform_item_time"
+                android:id="@+id/people_inform_item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="0.5"
                 android:gravity="center"
-                android:text="@string/list_state_time"
+                android:text="@string/people_inform_state_time"
                 android:textAlignment="center"
                 android:textColor="#FF0000"
                 android:textSize="16sp" />
@@ -77,21 +77,21 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/isolated_people_inform_item_when_expand"
+        android:id="@+id/people_inform_item_when_expand"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <Button
-            android:id="@+id/isolated_people_inform_item_phone_call"
+            android:id="@+id/people_inform_item_phone_call"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_weight="0.5"
             android:text="통화" />
 
         <Button
-            android:id="@+id/isolated_people_inform_item_show_location"
+            android:id="@+id/people_inform_item_show_location"
             android:text="위치보기"
             android:layout_width="0dp"
             android:layout_height="40dp"

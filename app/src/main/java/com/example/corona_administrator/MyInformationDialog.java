@@ -24,7 +24,7 @@ public class MyInformationDialog extends Dialog{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.my_information);
+        setContentView(R.layout.my_information_dialog);
 
         btn_ok = findViewById(R.id.my_inform_btn_ok);
         btn_ok.setOnClickListener(new View.OnClickListener(){

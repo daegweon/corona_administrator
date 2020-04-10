@@ -48,20 +48,13 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
 
         if(isValidUser())
         {
-            /*Intent managing_activity = new Intent(getApplicationContext(), ManagingActivity.class);
+            Intent managingActivity = new Intent(getApplicationContext(), ManagingActivity.class);
 
-            managing_activity.putExtra("name", name);
-            managing_activity.putExtra("id", id);
-            managing_activity.putExtra("phone_num", phone_num);
+            managingActivity.putExtra("name", name);
+            managingActivity.putExtra("id", id);
+            managingActivity.putExtra("phone_num", phone_num);
 
-            startActivity(managing_activity);*/
-            Intent myManagingActivity = new Intent(getApplicationContext(), MyManagingActivity.class);
-
-            myManagingActivity.putExtra("name", name);
-            myManagingActivity.putExtra("id", id);
-            myManagingActivity.putExtra("phone_num", phone_num);
-
-            startActivity(myManagingActivity);
+            startActivity(managingActivity);
             finish();
         }
 

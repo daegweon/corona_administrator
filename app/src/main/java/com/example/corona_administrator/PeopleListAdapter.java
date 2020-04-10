@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -47,7 +46,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     @Override
     public PeopleItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.isolated_people_inform_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.people_inform_item, parent, false);
         return new PeopleItemViewHolder(view);
     }
 
@@ -129,14 +128,14 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
         public PeopleItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.isolated_people_inform_item_name);
-            address = itemView.findViewById(R.id.isolated_people_inform_item_address);
-            state = itemView.findViewById(R.id.isolated_people_inform_item_state);
-            state_time = itemView.findViewById(R.id.isolated_people_inform_item_time);
+            name = itemView.findViewById(R.id.people_inform_item_name);
+            address = itemView.findViewById(R.id.people_inform_item_address);
+            state = itemView.findViewById(R.id.people_inform_item_state);
+            state_time = itemView.findViewById(R.id.people_inform_item_time);
 
-            when_expand = itemView.findViewById(R.id.isolated_people_inform_item_when_expand);
-            call = itemView.findViewById(R.id.isolated_people_inform_item_phone_call);
-            show_location = itemView.findViewById(R.id.isolated_people_inform_item_show_location);
+            when_expand = itemView.findViewById(R.id.people_inform_item_when_expand);
+            call = itemView.findViewById(R.id.people_inform_item_phone_call);
+            show_location = itemView.findViewById(R.id.people_inform_item_show_location);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
