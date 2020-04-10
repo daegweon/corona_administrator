@@ -1,4 +1,5 @@
 <resources>
+    
     <string name="app_name">자가격리자 전담공무원</string>
     <string name="dialog_name">격리자 상태 선택</string>
     <string name="ok">확인</string>

@@ -1,11 +1,9 @@
 package com.example.corona_administrator;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,8 +71,6 @@ public class MyManagingActivity extends AppCompatActivity {
         myInformBtn = findViewById(R.id.myinform_btn);
         refreshBtn = findViewById(R.id.refresh_btn);
 
-
-        //header 추가 필요
         listAdapter = new PeopleListAdapter(people);
 
         peopleListView = findViewById(R.id.recycler_view);
@@ -83,34 +79,28 @@ public class MyManagingActivity extends AppCompatActivity {
     }
 
     private void setViewsListener() {
-        //상태 버튼(stateHeader) 클릭 이벤트 리스너 필요(상태 필터링) --> header 추가 후에
-        /*stateHeader.setOnClickListener(new View.OnClickListener() {
+
+        stateHeader.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder stateFilterBuilder = new AlertDialog.Builder(MyManagingActivity.this);
-                final String[] states = {"전체", "정상", "통신안됨", "이탈"};
-
-                stateFilterBuilder.setTitle("격리자 상태 선택")
-                        .setSingleChoiceItems(states, 0, )
+                searchView.clearFocus();
+                AlertDialog stateFilterDialog = getStateFilterDialog();
+                stateFilterDialog.show();
             }
-        });*/
-
+        });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onQueryTextSubmit(String query) {
-                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(query);
-                runOnUiThread(notifyToAdapter);
+            public boolean onQueryTextChange(String newText) {
+                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(newText);
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(newText);
-                runOnUiThread(notifyToAdapter);
+            public boolean onQueryTextSubmit(String query) {
+                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(query);
                 return false;
             }
-
         });
 
         //공무원 DB에서 정보 가져오는 걸로 수정 필요
@@ -126,20 +116,56 @@ public class MyManagingActivity extends AppCompatActivity {
 
 
         refreshBtn.setOnClickListener(new Button.OnClickListener(){
-
             @Override
             public void onClick(View v) {
+                searchView.setQuery("", false);
+                searchView.clearFocus();
                 runRefreshListThread();
                 Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    private AlertDialog getStateFilterDialog(){
+        AlertDialog.Builder stateFilterBuilder = new AlertDialog.Builder(MyManagingActivity.this);
+
+        final String[] states = {"전체", "정상", "통신안됨", "이탈"};
+        final EditText stateQuery = new EditText(this);
+
+        stateFilterBuilder
+                .setTitle("격리자 상태 선택")
+                .setSingleChoiceItems(states, 0, new AlertDialog.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        stateQuery.setText(states[which]);
+                    }
+                })
+                .setPositiveButton(R.string.ok, new AlertDialog.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listAdapter.getFilter(PeopleListAdapter.FILTER_BY_STATE).filter(stateQuery.getText().toString());
+                    }
+                })
+
+                .setNegativeButton(R.string.cancel, new AlertDialog.OnClickListener(){
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+        return stateFilterBuilder.create();
+    }
+
+
     private void runRefreshListThread () {
+        listAdapter.listRefresh();
         thrdRefreshPeopleList = new Thread(new RefreshListRunnable());
         thrdRefreshPeopleList.start();
     }
-
 
 
     class RefreshListRunnable implements Runnable{

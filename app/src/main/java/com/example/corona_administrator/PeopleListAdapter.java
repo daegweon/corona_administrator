@@ -18,13 +18,17 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     final static int FILTER_BY_TEXT = 0;
     final static int FILTER_BY_STATE = 1;
 
-    private ArrayList<Person> unFilteredList = new ArrayList<>();
-    private ArrayList<Person> filteredList = new ArrayList<>();
+    private ArrayList<Person> unFilteredList;
+    private ArrayList<Person> filteredList;
 
     public PeopleListAdapter(ArrayList<Person> list){
         super();
         this.unFilteredList = list;
         this.filteredList = list;
+    }
+
+    public void listRefresh(){
+        filteredList = unFilteredList;
     }
 
     @NonNull
@@ -45,62 +49,54 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     }
 
 
-    public Filter getFilter(int filterType) {
+    public Filter getFilter(final int filter) {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                String filteringText = constraint.toString().toLowerCase();
 
-        if (filterType == FILTER_BY_TEXT) {
-            return new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    String inputText = constraint.toString().toLowerCase();
+                if (filter == FILTER_BY_TEXT && filteringText.isEmpty()
+                        || filter == FILTER_BY_STATE && filteringText.equals("전체"))
+                    filteredList = unFilteredList;
 
-                    if (inputText.isEmpty())
-                        filteredList = unFilteredList;
+                else
+                {
+                    ArrayList<Person> filteringList = new ArrayList<>();
 
-                    else
+                    for (Person person : unFilteredList)
                     {
-                        ArrayList<Person> filteringList = new ArrayList<>();
 
-                        for (Person person : unFilteredList)
-                        {
+                        switch (filter){
+                            case FILTER_BY_TEXT:
+                                if (!person.name.toLowerCase().contains(filteringText)
+                                    && !person.address.toLowerCase().contains(filteringText))
+                                    continue;
+                                else
+                                    break;
 
-                            if (person.name.contains(inputText) || person.address.contains(inputText))
-                                filteringList.add(person);
-
-
+                            case FILTER_BY_STATE:
+                                if (!person.state.toLowerCase().contains(filteringText))
+                                    continue;
                         }
 
-                        filteredList = filteringList;
+                        filteringList.add(person);
                     }
 
-                    FilterResults filterResults = new FilterResults();
-                    filterResults.values = filteredList;
-
-                    return filterResults;
+                    filteredList = filteringList;
                 }
 
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
-                    filteredList = (ArrayList<Person>) results.values;
-                    notifyDataSetChanged();
-                }
-            };
-        }
-        else if (filterType == FILTER_BY_STATE)
-        {
-            return new Filter() {
-                @Override
-                protected FilterResults performFiltering(CharSequence constraint) {
-                    return null;
-                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = filteredList;
 
-                @Override
-                protected void publishResults(CharSequence constraint, FilterResults results) {
+                return filterResults;
+            }
 
-                }
-            };
-        }
-
-        return null;
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                filteredList = (ArrayList<Person>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
 
