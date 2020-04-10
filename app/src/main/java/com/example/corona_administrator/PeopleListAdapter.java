@@ -2,6 +2,8 @@ package com.example.corona_administrator;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -165,6 +167,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
             address.setText(mPerson.getAddress());
             state.setText(mPerson.getState());
             state_time.setText(mPerson.getStateTime());
+
             birthDate = mPerson.getBirthDate();
             phoneNumber = mPerson.getPhoneNumber();
 
@@ -178,8 +181,8 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
                 @Override
                 public void onClick(View v) {
-                    //전화걸기
-
+                    Uri uri = Uri.parse("tel:" + Uri.encode(phoneNumber));
+                    mContext.startActivity(new Intent(Intent.ACTION_DIAL, uri));
                 }
             });
 
