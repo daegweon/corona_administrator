@@ -3,6 +3,7 @@ package com.example.corona_administrator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,21 +16,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoCursor;
-import com.mongodb.client.MongoDatabase;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.bson.Document;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
-import static com.mongodb.client.model.Filters.eq;
 
 public class ManagingActivity extends AppCompatActivity {
-    //Connect to MongoDB server//
-    private MongoClient mongoClient = new MongoClient("143.248.56.151",19191);
-    private MongoDatabase database = mongoClient.getDatabase("corona19_app");
 
     private PeopleListAdapter listAdapter;
     private TextView numOfIsolated, stateHeader;
@@ -37,7 +36,8 @@ public class ManagingActivity extends AppCompatActivity {
     private Button myInformBtn, refreshBtn;
     private RecyclerView peopleListView;
 
-    private Thread thrdRefreshPeopleList;
+    //private Thread thrdRefreshPeopleList;
+    private GetPeopleListTask getPeopleListTask;
 
     private ArrayList<Person> people = new ArrayList<>();
 
@@ -162,13 +162,91 @@ public class ManagingActivity extends AppCompatActivity {
 
 
     private void runRefreshListThread () {
+        people.clear();
         listAdapter.listRefresh();
-        thrdRefreshPeopleList = new Thread(new RefreshListRunnable());
-        thrdRefreshPeopleList.start();
+        getPeopleListTask = new GetPeopleListTask();
+        getPeopleListTask.execute();
+
+        //thrdRefreshPeopleList = new Thread(new RefreshListRunnable());
+        //thrdRefreshPeopleList.start();
+    }
+
+    class GetPeopleListTask extends AsyncTask<Void, Integer, Void>{
+        //https://youngest-programming.tistory.com/11
+        //https://itmining.tistory.com/7
+
+        HttpURLConnection urlConn;
+        URL url;
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+
+            try {
+                url = new URL("http://143.248.53.196:8000/api/quarantined");
+                urlConn = (HttpURLConnection) url.openConnection();
+                urlConn.setRequestMethod("GET");
+                urlConn.setRequestProperty("Content-Type", "application/quarantined");
+
+                if (urlConn.getResponseCode() != urlConn.HTTP_OK){
+                    urlConn.disconnect();
+                    return null;
+                }
+
+                BufferedReader reader = new BufferedReader(new InputStreamReader(urlConn.getInputStream(), "UTF-8"));
+
+                String line;
+                String page = "";
+
+                while ((line = reader.readLine()) != null){
+                    page += line;
+                }
+
+                reader.close();
+
+                JSONArray jsonPeople = new JSONObject(page).getJSONArray("people");
+                JSONObject jsonPerson;
+                for (int i = 0; i < jsonPeople.length(); i++){
+                    jsonPerson = jsonPeople.getJSONObject(i);
+
+                    Person person = new Person();
+
+                    //need to set birthDate, State
+                    person.setName(jsonPerson.getString("name"));
+                    person.setAddress(jsonPerson.getString("addr") + ", " + jsonPerson.getString("addr_detail"));
+                    person.setZipCode(jsonPerson.getString("zip_code"));
+                    person.setTimeLastSent(jsonPerson.getLong("timeLastSent"));
+                    person.setTimeLastStay(jsonPerson.getLong("timeLastStay"));
+                    person.setPhoneNumber(jsonPerson.getString("contact"));
+
+                    person.setState();
+
+                    people.add(person);
+                    publishProgress(people.size() - 1);
+                }
+
+
+            } catch (IOException | JSONException e) {
+                e.printStackTrace();
+            } finally {
+                urlConn.disconnect();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            listAdapter.notifyItemChanged(values[0]);
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            numOfIsolated.setText("자가격리자수 : " + String.valueOf(people.size()));
+        }
     }
 
 
-    class RefreshListRunnable implements Runnable{
+    /*class RefreshListRunnable implements Runnable{
 
         @Override
         public void run() {
@@ -209,5 +287,5 @@ public class ManagingActivity extends AppCompatActivity {
             }
 
         }
-    }
+    }*/
 }
