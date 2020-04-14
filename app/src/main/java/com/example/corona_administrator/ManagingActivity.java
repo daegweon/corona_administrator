@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 
 public class ManagingActivity extends AppCompatActivity {
@@ -164,14 +165,12 @@ public class ManagingActivity extends AppCompatActivity {
     private void runRefreshListThread () {
         people.clear();
         listAdapter.listRefresh();
+
         getPeopleListTask = new GetPeopleListTask();
         getPeopleListTask.execute();
-
-        //thrdRefreshPeopleList = new Thread(new RefreshListRunnable());
-        //thrdRefreshPeopleList.start();
     }
 
-    class GetPeopleListTask extends AsyncTask<Void, Integer, Void>{
+    class GetPeopleListTask extends AsyncTask<Void, Void, Void>{
         //https://youngest-programming.tistory.com/11
         //https://itmining.tistory.com/7
 
@@ -221,7 +220,6 @@ public class ManagingActivity extends AppCompatActivity {
                     person.setState();
 
                     people.add(person);
-                    publishProgress(people.size() - 1);
                 }
 
 
@@ -235,12 +233,8 @@ public class ManagingActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(Integer... values) {
-            listAdapter.notifyItemChanged(values[0]);
-        }
-
-        @Override
         protected void onPostExecute(Void aVoid) {
+            listAdapter.notifyDataSetChanged();
             numOfIsolated.setText("자가격리자수 : " + String.valueOf(people.size()));
         }
     }

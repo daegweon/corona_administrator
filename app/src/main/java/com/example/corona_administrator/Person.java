@@ -1,13 +1,15 @@
 package com.example.corona_administrator;
 
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 
 public class Person {
-    private static final String[] timeOver = new String[]{"5분 이하", "10분 이상", "30분 이상", "1시간 이상"};
-    private static final String[] stateList = new String[]{"정상", "통신안됨", "이탈"};
-    private static final int stateListSize = 3;
-    private static final int timeOverSize = 4;
-    private static Random random = new Random();
+    private static final String STATE_NORMAL = "정상";
+    private static final String STATE_LOST_COMMUN = "통신안됨";
+    private static final String STATE_LEFT = "이탈";
+
+    private static final long TIME_MARGIN = 5;
 
     private String name;
     private String address;
@@ -25,7 +27,7 @@ public class Person {
     // constructor
     public Person(){}
 
-    public Person(String name, String address, String state, String birthDate, String phoneNumber) {
+    /*public Person(String name, String address, String state, String birthDate, String phoneNumber) {
         this.name = name;
         this.address = address;
         this.state = state;
@@ -35,7 +37,7 @@ public class Person {
 
 
         checkState();
-    }
+    }*/
 
     public void setName(String name){
         this.name = name;
@@ -50,11 +52,11 @@ public class Person {
     }
 
     public void setTimeLastSent(long timeLastSent){
-        this.timeLastSent = timeLastSent;
+        this.timeLastSent = TimeUnit.MILLISECONDS.toMinutes(timeLastSent);
     }
 
     public void setTimeLastStay(long timeLastStay){
-        this.timeLastStay = timeLastStay;
+        this.timeLastStay = TimeUnit.MILLISECONDS.toMinutes(timeLastStay);
     }
 
     public void setPhoneNumber(String phoneNumber){
@@ -66,18 +68,38 @@ public class Person {
     }
 
     public void setState(){
-        /*long currentTime = System.currentTimeMillis();
+        long currentTimeMin = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 
-        if (currentTime)
-        this.state = state;*/
-        this.state = stateList[random.nextInt(stateListSize)];
-        checkState();
+        if (timeLastStay == timeLastSent){
+            if (currentTimeMin < timeLastStay + TIME_MARGIN)
+                this.state = STATE_NORMAL;
+            else
+                this.state = STATE_LOST_COMMUN;
+        } else {
+            this.state = STATE_LEFT;
+        }
+
+        checkState(currentTimeMin);
     }
 
 
-    private void checkState() {
-        if (!state.equals("정상")){
-            stateTime = timeOver[random.nextInt(timeOverSize)];
+    private void checkState(long currentTimeMin) {
+        if (state.equals("정상"))
+            return;
+
+        long timeDifference = currentTimeMin - timeLastStay;
+
+        if (timeDifference <= 10){
+            stateTime = "10분 이하";
+        }
+        else if (timeDifference > 10 && timeDifference <= 30){
+            stateTime = "10분 이상";
+        }
+        else if (timeDifference > 30 && timeDifference <= 60){
+            stateTime = "30분 이상";
+        }
+        else if (timeDifference > 60){
+            stateTime = "1시간 이상";
         }
     }
 
