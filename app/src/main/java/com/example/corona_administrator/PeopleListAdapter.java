@@ -40,6 +40,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
     public void listRefresh(){
         filteredList = unFilteredList;
+        selectedPerson.clear();
     }
 
     @NonNull
@@ -149,8 +150,9 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
                     if (prePosition != -1) {
                         notifyItemChanged(prePosition);
-                        notifyItemChanged(position);
                     }
+
+                    notifyItemChanged(position);
 
                     prePosition = position;
                 }

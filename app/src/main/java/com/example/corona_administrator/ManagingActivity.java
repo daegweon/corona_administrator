@@ -166,6 +166,7 @@ public class ManagingActivity extends AppCompatActivity {
         people.clear();
         listAdapter.listRefresh();
 
+
         getPeopleListTask = new GetPeopleListTask();
         getPeopleListTask.execute();
     }
@@ -238,48 +239,4 @@ public class ManagingActivity extends AppCompatActivity {
             numOfIsolated.setText("자가격리자수 : " + String.valueOf(people.size()));
         }
     }
-
-
-    /*class RefreshListRunnable implements Runnable{
-
-        @Override
-        public void run() {
-            MongoCollection<Document> collection = database.getCollection("isolated_people");
-
-            long count = collection.countDocuments();
-            numOfIsolated.setText("자가격리자수: " + String.valueOf(count));
-
-            MongoCursor<Document> cursor = collection.find().iterator();
-
-            try{
-                if (people.size() != 0)
-                    people.clear();
-
-                while(cursor.hasNext()) {
-                    Document currentDoc = cursor.next();
-                    String state = "";
-
-                    switch (currentDoc.getInteger("state")){
-                        case 1:
-                            state = "정상";
-                            break;
-                        case 2:
-                            state = "통신안됨";
-                            break;
-                        case 3:
-                            state = "이탈";
-                            break;
-                    }
-                    Person person = new Person(currentDoc.getString("name"), currentDoc.getString("address"), state,
-                                                currentDoc.getString("birthdate"), currentDoc.getString("phone_number"));
-
-                    people.add(person);
-                    runOnUiThread(notifyToAdapter);
-                }
-            } finally {
-                cursor.close();
-            }
-
-        }
-    }*/
 }
