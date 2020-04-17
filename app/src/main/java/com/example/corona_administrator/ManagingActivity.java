@@ -37,15 +37,12 @@ public class ManagingActivity extends AppCompatActivity {
     private Button myInformBtn, refreshBtn;
     private RecyclerView peopleListView;
 
+    private Toast mRefreshToast;
+
     //private Thread thrdRefreshPeopleList;
     private GetPeopleListTask getPeopleListTask;
 
     private ArrayList<Person> people = new ArrayList<>();
-
-    private Runnable notifyToAdapter = new Runnable() {
-        @Override
-        public void run() { ManagingActivity.this.listAdapter.notifyDataSetChanged(); }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,7 +119,11 @@ public class ManagingActivity extends AppCompatActivity {
                 searchView.clearFocus();
                 searchView.setQuery("", false);
                 runRefreshListThread();
-                Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT).show();
+
+                if (mRefreshToast != null)
+                    mRefreshToast.cancel();
+                mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
+                mRefreshToast.show();
             }
         });
     }

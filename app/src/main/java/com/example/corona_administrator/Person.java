@@ -70,7 +70,7 @@ public class Person {
     public void setState(){
         long currentTimeMin = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
 
-        if (timeLastStay == timeLastSent){
+        if (Math.abs(timeLastStay - timeLastSent) < TIME_MARGIN){
             if (currentTimeMin < timeLastStay + TIME_MARGIN)
                 this.state = STATE_NORMAL;
             else
@@ -79,11 +79,11 @@ public class Person {
             this.state = STATE_LEFT;
         }
 
-        checkState(currentTimeMin);
+        setStateTime(currentTimeMin);
     }
 
 
-    private void checkState(long currentTimeMin) {
+    private void setStateTime(long currentTimeMin) {
         if (state.equals("정상"))
             return;
 
