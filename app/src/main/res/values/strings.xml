@@ -1,8 +1,8 @@
 <resources>
-    <string name="API_KEY"><!--Google Map API KEY--></string>
+    <string name="google_maps_key"><!--Google Map API KEY--></string>
 
     <string name="app_name">자가격리자 전담공무원</string>
-    <string name="dialog_name">격리자 상태 선택</string>
+    <string name="dialog_name">격리자 상태 선택</string> n
 
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
