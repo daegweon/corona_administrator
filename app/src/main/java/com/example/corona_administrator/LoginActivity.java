@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
         login_btn.setOnClickListener(this);
     }
 
-    //수정필요
+    //수정필요 - 서버에서 아이디 비밀번호 확인
     private boolean isValidUser(){
         return true;
     }

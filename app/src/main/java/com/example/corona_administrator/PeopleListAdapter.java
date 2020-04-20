@@ -40,6 +40,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
     public void listRefresh(){
         filteredList = unFilteredList;
+        selectedPerson.clear();
     }
 
     @NonNull
@@ -149,8 +150,9 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
                     if (prePosition != -1) {
                         notifyItemChanged(prePosition);
-                        notifyItemChanged(position);
                     }
+
+                    notifyItemChanged(position);
 
                     prePosition = position;
                 }
@@ -190,6 +192,10 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
                 @Override
                 public void onClick(View v) {
                     //지도 보여주기
+                    // 당장은 격리주소만 받아감, 나중에는 현재주소도 같이 받아야 함
+                    Intent intent = new Intent(mContext, MapsActivity.class);
+                    intent.putExtra("quarantine_address", mPerson.getAddress());
+                    mContext.startActivity(intent);
                 }
             });
         }
