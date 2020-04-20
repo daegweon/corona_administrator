@@ -83,11 +83,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
         //MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소");
         mOptions1.snippet(this.quarantine_address);
-        mMap.addMarker(mOptions1);
+        mMap.addMarker(mOptions1).showInfoWindow();
 
         MarkerOptions mOptions2 = new MarkerOptions().position(current_point).title("현재위치");
         mOptions2.snippet(this.current_address);
-        mMap.addMarker(mOptions2);
+        mMap.addMarker(mOptions2).showInfoWindow();
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_point, 15));
     }
