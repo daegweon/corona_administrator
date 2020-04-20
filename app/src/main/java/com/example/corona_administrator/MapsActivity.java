@@ -11,6 +11,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -78,7 +79,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // 좌표(위도, 경도) 생성
         LatLng current_point = new LatLng(current_addressList.get(0).getLatitude(), current_addressList.get(0).getLongitude());
 
-        MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소");
+        MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소").icon(BitmapDescriptorFactory
+                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        //MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소");
         mOptions1.snippet(this.quarantine_address);
         mMap.addMarker(mOptions1);
 
