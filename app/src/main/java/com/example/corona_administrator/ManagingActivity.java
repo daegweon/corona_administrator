@@ -40,6 +40,10 @@ public class ManagingActivity extends AppCompatActivity {
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
     private int numOfAbnormal;
+    private int numOflessthanten;
+    private int numOfmorethanten;
+    private int numOfmorethanthirty;
+    private int numOfmorethanhour;
 
 
 
@@ -185,9 +189,13 @@ public class ManagingActivity extends AppCompatActivity {
         getPeopleListTask.execute();
 
         // notification test (notify when people list is refreshed)
-        NotificationSomethings(numOfAbnormal);
+        NotificationSomethings(numOfAbnormal, numOflessthanten, numOfmorethanten, numOfmorethanthirty, numOfmorethanhour);
 
         numOfAbnormal = 0;
+        numOflessthanten = 0;
+        numOfmorethanten = 0;
+        numOfmorethanthirty = 0;
+        numOfmorethanhour = 0;
 
     }
 
@@ -244,6 +252,18 @@ public class ManagingActivity extends AppCompatActivity {
 
                     if(!person.getState().equals("정상")){
                         numOfAbnormal += 1;
+                        if(person.getStateTime().equals("10분 이하")){
+                            numOflessthanten += 1;
+                        }
+                        else if(person.getStateTime().equals("10분 이상")){
+                            numOfmorethanten += 1;
+                        }
+                        else if(person.getStateTime().equals("30분 이상")){
+                            numOfmorethanthirty += 1;
+                        }
+                        else{
+                            numOfmorethanhour += 1;
+                        }
                     }
                 }
 
@@ -265,20 +285,23 @@ public class ManagingActivity extends AppCompatActivity {
     }
 
 
-    public void NotificationSomethings(int numofabnormal) {
+    public void NotificationSomethings(int numofabnormal, int numoflessthanten, int numofmorethanten, int numofmorethanthirty, int numofmorethanhour) {
 
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
         String title = Integer.toString(numofabnormal).concat("명 비정상 상태");
 
+        String text = "1시간 이상: ".concat(Integer.toString(numofmorethanhour)).concat("명\n1시간 미만 30분 이상: ").concat(Integer.toString(numofmorethanthirty))
+                .concat("명\n30분 미만 10분 이상: ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만: ").concat(Integer.toString(numoflessthanten));
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
                 .setContentTitle(title)
-                .setContentText("상태바 드래그시 보이는 서브타이틀")
+                .setContentText("세부사항 드래그해서 보기")
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
-                //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setAutoCancel(true);
 
