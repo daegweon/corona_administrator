@@ -292,8 +292,8 @@ public class ManagingActivity extends AppCompatActivity {
 
         String title = Integer.toString(numofabnormal).concat("명 비정상 상태");
 
-        String text = "1시간 이상: ".concat(Integer.toString(numofmorethanhour)).concat("명\n1시간 미만 30분 이상: ").concat(Integer.toString(numofmorethanthirty))
-                .concat("명\n30분 미만 10분 이상: ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만: ").concat(Integer.toString(numoflessthanten));
+        String text = "1시간 이상:    ".concat(Integer.toString(numofmorethanhour)).concat("명\n 30분 이상 1시간 미만:    ").concat(Integer.toString(numofmorethanthirty))
+                .concat("명\n10분 이상 30분 미만:    ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만:    ").concat(Integer.toString(numoflessthanten));
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
