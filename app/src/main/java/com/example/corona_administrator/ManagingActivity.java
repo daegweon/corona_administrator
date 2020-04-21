@@ -3,6 +3,7 @@ package com.example.corona_administrator;
 import android.app.AlertDialog;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -294,6 +295,12 @@ public class ManagingActivity extends AppCompatActivity {
 
         String text = "1시간 이상:    ".concat(Integer.toString(numofmorethanhour)).concat("명\n 30분 이상 1시간 미만:    ").concat(Integer.toString(numofmorethanthirty))
                 .concat("명\n10분 이상 30분 미만:    ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만:    ").concat(Integer.toString(numoflessthanten));
+
+        // pending intent part start
+        //Intent notificationIntent = new Intent(this, ManagingActivity.class);
+        //notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        // pending intent part end
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
