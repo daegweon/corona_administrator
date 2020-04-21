@@ -39,6 +39,8 @@ public class ManagingActivity extends AppCompatActivity {
 
     public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
+    private int numOfAbnormal;
+
 
 
     private PeopleListAdapter listAdapter;
@@ -62,8 +64,6 @@ public class ManagingActivity extends AppCompatActivity {
         initViews();
         setViewsListener();
 
-        // notification test (notify only at start)
-        NotificationSomethings();
     }
 
     @Override
@@ -183,6 +183,12 @@ public class ManagingActivity extends AppCompatActivity {
 
         getPeopleListTask = new GetPeopleListTask();
         getPeopleListTask.execute();
+
+        // notification test (notify when people list is refreshed)
+        NotificationSomethings(numOfAbnormal);
+
+        numOfAbnormal = 0;
+
     }
 
     class GetPeopleListTask extends AsyncTask<Void, Void, Void>{
@@ -235,6 +241,10 @@ public class ManagingActivity extends AppCompatActivity {
                     person.setState();
 
                     people.add(person);
+
+                    if(!person.getState().equals("정상")){
+                        numOfAbnormal += 1;
+                    }
                 }
 
 
@@ -255,15 +265,17 @@ public class ManagingActivity extends AppCompatActivity {
     }
 
 
-    public void NotificationSomethings() {
+    public void NotificationSomethings(int numofabnormal) {
 
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
 
+        String title = Integer.toString(numofabnormal).concat("명 비정상 상태");
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
-                .setContentTitle("상태바 드래그시 보이는 타이틀")
+                .setContentTitle(title)
                 .setContentText("상태바 드래그시 보이는 서브타이틀")
                 // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
                 //.setStyle(new NotificationCompat.BigTextStyle().bigText("더 많은 내용을 보여줘야 하는 경우..."))
