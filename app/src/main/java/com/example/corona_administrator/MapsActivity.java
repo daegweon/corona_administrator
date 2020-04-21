@@ -7,11 +7,14 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
@@ -78,14 +81,32 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // 좌표(위도, 경도) 생성
         LatLng current_point = new LatLng(current_addressList.get(0).getLatitude(), current_addressList.get(0).getLongitude());
 
-        MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소");
+        MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소").icon(BitmapDescriptorFactory
+                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+        //MarkerOptions mOptions1 = new MarkerOptions().position(quarantine_point).title("격리주소");
         mOptions1.snippet(this.quarantine_address);
         mMap.addMarker(mOptions1);
 
         MarkerOptions mOptions2 = new MarkerOptions().position(current_point).title("현재위치");
         mOptions2.snippet(this.current_address);
-        mMap.addMarker(mOptions2);
+        mMap.addMarker(mOptions2).showInfoWindow();
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_point, 15));
+
+        //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(current_point, 15));
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
+        //the include method will calculate the min and max bound.
+        builder.include(mOptions1.getPosition());
+        builder.include(mOptions2.getPosition());
+
+        LatLngBounds bounds = builder.build();
+
+        int width = getResources().getDisplayMetrics().widthPixels;
+        int height = getResources().getDisplayMetrics().heightPixels;
+        int padding = (int) (width * 0.30); // offset from edges of the map 10% of screen
+
+        CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, width, height, padding);
+
+        mMap.animateCamera(cu);
     }
 }
