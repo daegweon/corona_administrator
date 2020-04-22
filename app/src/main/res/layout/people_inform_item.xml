@@ -15,13 +15,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:weightSum="5">
 
         <TextView
             android:id="@+id/people_inform_item_name"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:gravity="center"
             android:paddingRight="2.5dp"
@@ -33,7 +36,8 @@
         <TextView
             android:id="@+id/people_inform_item_address"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_weight="3"
             android:gravity="center"
             android:paddingLeft="2.5dp"
@@ -45,7 +49,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical"
@@ -56,6 +60,7 @@
                 android:id="@+id/people_inform_item_state"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/people_inform_state"
@@ -67,6 +72,7 @@
                 android:id="@+id/people_inform_item_time"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:gravity="center"
                 android:text="@string/people_inform_state_time"
@@ -86,15 +92,15 @@
         <Button
             android:id="@+id/people_inform_item_phone_call"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="통화" />
 
         <Button
             android:id="@+id/people_inform_item_show_location"
-            android:text="위치보기"
             android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:layout_weight="0.5"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="위치보기" />
     </LinearLayout>
 </LinearLayout>
