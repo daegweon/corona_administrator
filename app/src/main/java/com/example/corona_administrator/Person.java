@@ -9,7 +9,8 @@ public class Person {
     private static final String STATE_LOST_COMMUN = "통신안됨";
     private static final String STATE_LEFT = "이탈";
 
-    private static final long TIME_MARGIN = 5;
+    private static final long STAY_SENT_DIFF_MARGIN = 15;
+    private static final long STAY_CURRENT_DIFF_MARGIN = 10 * 60; //10mins
 
     private String name;
     private String address;
@@ -52,11 +53,11 @@ public class Person {
     }
 
     public void setTimeLastSent(long timeLastSent){
-        this.timeLastSent = TimeUnit.MILLISECONDS.toMinutes(timeLastSent);
+        this.timeLastSent = TimeUnit.MILLISECONDS.toSeconds(timeLastSent);
     }
 
     public void setTimeLastStay(long timeLastStay){
-        this.timeLastStay = TimeUnit.MILLISECONDS.toMinutes(timeLastStay);
+        this.timeLastStay = TimeUnit.MILLISECONDS.toSeconds(timeLastStay);
     }
 
     public void setPhoneNumber(String phoneNumber){
@@ -68,37 +69,39 @@ public class Person {
     }
 
     public void setState(){
-        long currentTimeMin = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis());
+        long currentTimeSec = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
 
-        if (Math.abs(timeLastStay - timeLastSent) < TIME_MARGIN){
-            if (currentTimeMin < timeLastStay + TIME_MARGIN)
+        if (Math.abs(timeLastStay - timeLastSent) < STAY_SENT_DIFF_MARGIN){
+
+            if (currentTimeSec < timeLastStay + STAY_CURRENT_DIFF_MARGIN)
                 this.state = STATE_NORMAL;
             else
                 this.state = STATE_LOST_COMMUN;
+
         } else {
             this.state = STATE_LEFT;
         }
 
-        setStateTime(currentTimeMin);
+        setStateTime(currentTimeSec);
     }
 
 
-    private void setStateTime(long currentTimeMin) {
+    private void setStateTime(long currentTimeSec) {
         if (state.equals("정상"))
             return;
 
-        long timeDifference = currentTimeMin - timeLastStay;
+        long timeDifference = currentTimeSec - timeLastStay;
 
-        if (timeDifference <= 10){
+        if (timeDifference <= 10 * 60){
             stateTime = "10분 이하";
         }
-        else if (timeDifference > 10 && timeDifference <= 30){
+        else if (timeDifference > 10 * 60 && timeDifference <= 30 * 60){
             stateTime = "10분 이상";
         }
-        else if (timeDifference > 30 && timeDifference <= 60){
+        else if (timeDifference > 30 * 60 && timeDifference <= 60 * 60){
             stateTime = "30분 이상";
         }
-        else if (timeDifference > 60){
+        else if (timeDifference > 60 * 60){
             stateTime = "1시간 이상";
         }
     }

@@ -58,6 +58,7 @@ public class ManagingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
+        searchView.clearFocus();
         runRefreshListThread();
     }
 
@@ -88,6 +89,14 @@ public class ManagingActivity extends AppCompatActivity {
             }
         });
 
+        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                searchView.clearFocus();
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             Filter textFilter = listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT);
 
@@ -100,9 +109,12 @@ public class ManagingActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 textFilter.filter(query);
+                searchView.clearFocus();
                 return false;
             }
         });
+        searchView.setIconifiedByDefault(true);
+        searchView.setIconified(false);
 
         //공무원 DB에서 정보 가져오는 걸로 수정 필요
         Intent intent = getIntent();
@@ -216,7 +228,7 @@ public class ManagingActivity extends AppCompatActivity {
 
                     //need to set birthDate, State
                     person.setName(jsonPerson.getString("name"));
-                    person.setAddress(jsonPerson.getString("addr") + ", " + jsonPerson.getString("addr_detail"));
+                    person.setAddress(jsonPerson.getString("addr") /*+ ", " + jsonPerson.getString("addr_detail")*/);
                     person.setZipCode(jsonPerson.getString("zip_code"));
                     person.setTimeLastSent(jsonPerson.getLong("timeLastSent"));
                     person.setTimeLastStay(jsonPerson.getLong("timeLastStay"));

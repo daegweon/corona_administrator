@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
+    android:focusableInTouchMode="true"
     android:orientation="vertical"
     android:weightSum="10"
     tools:context=".ManagingActivity">
@@ -90,7 +91,7 @@
         android:layout_height="0dp"
         android:layout_margin="4dp"
         android:layout_weight="0.8"
-        android:iconifiedByDefault="false"
+        android:focusableInTouchMode="true"
         android:queryHint="@string/activity_managing_search_hint" />
 
     <LinearLayout
@@ -127,27 +128,19 @@
             android:textColor="#000000"
             android:textSize="16sp" />
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/state_header"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="vertical"
             android:paddingLeft="2.5dp"
-            android:weightSum="1">
+            android:gravity="center"
+            android:text="@string/header_state"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/state_header"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:gravity="center"
-                android:text="@string/header_state"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textSize="16sp" />
-
-        </LinearLayout>
     </LinearLayout>
 
 
@@ -161,5 +154,6 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="4dp"
         android:layout_weight="7.2"
+        android:focusableInTouchMode="true"
         android:headerDividersEnabled="true" />
 </LinearLayout>
