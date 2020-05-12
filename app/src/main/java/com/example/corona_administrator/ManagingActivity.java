@@ -11,6 +11,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -74,8 +76,8 @@ public class ManagingActivity extends AppCompatActivity {
 
         initViews();
         setViewsListener();
-        // refresh? every 30 seconds
-        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
+        // refresh? every 10 seconds
+        jobScheduler.scheduleAtFixedRate(refresher, 10000, 10000);
 
     }
 
