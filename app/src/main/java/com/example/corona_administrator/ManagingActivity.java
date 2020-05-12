@@ -33,6 +33,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 
@@ -61,6 +63,10 @@ public class ManagingActivity extends AppCompatActivity {
 
     private ArrayList<Person> people = new ArrayList<>();
 
+    // refresh?
+    Timer jobScheduler = new Timer();
+    Refresh refresher = new Refresh();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +74,8 @@ public class ManagingActivity extends AppCompatActivity {
 
         initViews();
         setViewsListener();
+        // refresh? every 30 seconds
+        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
 
     }
 
@@ -178,6 +186,15 @@ public class ManagingActivity extends AppCompatActivity {
                 });
 
         return stateFilterBuilder.create();
+    }
+
+    // Timer Task
+    class Refresh extends TimerTask {
+        public void run(){
+            runRefreshListThread();
+
+        }
+
     }
 
 
