@@ -2,14 +2,14 @@
     <string name="google_maps_key"><!--Google Map API KEY--></string>
 
     <string name="app_name">자가격리자 전담공무원</string>
-    <string name="dialog_name">격리자 상태 선택</string> n
+    <string name="dialog_name">격리자 상태 선택</string>
 
     <string name="ok">확인</string>
     <string name="cancel">취소</string>
 
     <string name="header_name">이름</string>
     <string name="header_address">격리주소</string>
-    <string name="header_state">격리지역\n이탈여부</string>
+    <string name="header_state">격리상태</string>
 
     <string name="people_inform_name">name</string>
     <string name="people_inform_address">address</string>

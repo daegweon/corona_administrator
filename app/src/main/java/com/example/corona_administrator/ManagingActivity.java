@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -88,15 +89,17 @@ public class ManagingActivity extends AppCompatActivity {
         });
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            Filter textFilter = listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT);
+
             @Override
             public boolean onQueryTextChange(String newText) {
-                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(newText);
+                textFilter.filter(newText);
                 return false;
             }
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT).filter(query);
+                textFilter.filter(query);
                 return false;
             }
         });
