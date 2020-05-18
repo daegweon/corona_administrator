@@ -25,21 +25,6 @@ public class Person {
     private String phoneNumber;
 
 
-    // constructor
-    public Person(){}
-
-    /*public Person(String name, String address, String state, String birthDate, String phoneNumber) {
-        this.name = name;
-        this.address = address;
-        this.state = state;
-
-        this.birthDate = birthDate;
-        this.phoneNumber = phoneNumber;
-
-
-        checkState();
-    }*/
-
     public void setName(String name){
         this.name = name;
     }
