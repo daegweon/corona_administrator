@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     @Override
     public PeopleItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         mContext = parent.getContext();
-        View view = LayoutInflater.from(mContext).inflate(R.layout.people_inform_item, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.people_list_item, parent, false);
         return new PeopleItemViewHolder(view);
     }
 
@@ -115,10 +116,9 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
     class PeopleItemViewHolder extends RecyclerView.ViewHolder{
 
-        private TextView name, address, state, state_time;
-        private String phoneNumber, birthDate;
+        private TextView name, address, state, phone, detail_state;
 
-        private LinearLayout when_expand;
+        private ConstraintLayout details;
         private Button call, show_location;
 
         private Person mPerson;
@@ -129,14 +129,16 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
         public PeopleItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            name = itemView.findViewById(R.id.people_inform_item_name);
-            address = itemView.findViewById(R.id.people_inform_item_address);
-            state = itemView.findViewById(R.id.people_inform_item_state);
-            state_time = itemView.findViewById(R.id.people_inform_item_time);
+            name = itemView.findViewById(R.id.item_header_name);
+            state = itemView.findViewById(R.id.item_header_state);
 
-            when_expand = itemView.findViewById(R.id.people_inform_item_when_expand);
-            call = itemView.findViewById(R.id.people_inform_item_phone_call);
-            show_location = itemView.findViewById(R.id.people_inform_item_show_location);
+            details = itemView.findViewById(R.id.item_details);
+            phone = itemView.findViewById(R.id.item_details_phone);
+            address = itemView.findViewById(R.id.item_details_address);
+            detail_state = itemView.findViewById(R.id.item_details_state);
+
+            call = itemView.findViewById(R.id.item_details_call);
+            show_location = itemView.findViewById(R.id.item_details_show_location);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -167,14 +169,15 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
             name.setText(mPerson.getName());
             address.setText(mPerson.getAddress());
             state.setText(mPerson.getState());
-            state_time.setText(mPerson.getStateTime());
-
-            birthDate = mPerson.getBirthDate();
-            phoneNumber = mPerson.getPhoneNumber();
+            phone.setText(mPerson.getPhoneNumber());
+            detail_state.setText(mPerson.getState() + mPerson.getStateTime());
 
             setListeners();
 
-            changeVisibility(selectedPerson.get(position));
+            if (selectedPerson.get(position))
+                details.setVisibility(View.VISIBLE);
+            else
+                details.setVisibility(View.GONE);
         }
 
         private void setListeners(){
@@ -182,7 +185,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
                 @Override
                 public void onClick(View v) {
-                    Uri uri = Uri.parse("tel:" + Uri.encode(phoneNumber));
+                    Uri uri = Uri.parse("tel:" + Uri.encode(phone.getText().toString()));
                     mContext.startActivity(new Intent(Intent.ACTION_DIAL, uri));
                 }
             });
@@ -198,29 +201,6 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
                     mContext.startActivity(intent);
                 }
             });
-        }
-
-        private void changeVisibility(final boolean isExpanded){
-            int dpValue = 40;
-            float d = mContext.getResources().getDisplayMetrics().density;
-            int height = (int) (dpValue * d);
-
-            ValueAnimator va = isExpanded? ValueAnimator.ofInt(0, height) : ValueAnimator.ofInt(height, 0);
-
-            va.setDuration(300);
-            va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-                @Override
-                public void onAnimationUpdate(ValueAnimator animation) {
-                    int value = (int) animation.getAnimatedValue();
-
-                    when_expand.getLayoutParams().height = value;
-                    when_expand.requestLayout();
-
-                    when_expand.setVisibility(isExpanded? View.VISIBLE : View.GONE);
-                }
-            });
-
-            va.start();
         }
     }
 }

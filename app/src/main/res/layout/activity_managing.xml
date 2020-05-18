@@ -1,159 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".ManagingActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#1985E0"
-        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="자가격리자 관리 목록"
+        android:textColor="#606060"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.067" />
 
+    <TextView
+        android:id="@+id/text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="공무원 ID : 123456"
+        android:textColor="#606060"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-        <Button
-            android:id="@+id/myinform_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/button_background"
-            android:gravity="center"
-            android:text="@string/activity_managing_myinfo"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/text_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="29dp"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="이름 : 김이박"
+        android:textColor="#606060"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
-        <TextView
-            android:id="@+id/app_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/activity_managing_list"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/myinform_btn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/text_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="휴대폰 번호 : 01029302818"
+        android:textColor="#606060"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:id="@+id/linearLayout3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
         android:orientation="horizontal"
-        android:weightSum="7">
-
-        <TextView
-            android:id="@+id/num_of_isolated"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="4.8"
-            android:background="@drawable/rounded_corner"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/activity_managing_numpeople"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_phone">
 
         <Button
-            android:id="@+id/refresh_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginRight="4dp"
-            android:layout_weight="2.2"
-            android:background="@drawable/button_background"
-            android:gravity="center"
-            android:text="@string/activity_managing_refresh"
-            android:textColor="#03A9F4"
-            android:textSize="18sp" />
+            android:id="@+id/button_isolated"
+            android:layout_width="181dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:background="@drawable/list_button_back"
+            android:paddingRight="4dp"
+            android:paddingBottom="6dp"
+            android:text="자가격리자수 : 6"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/button_state"
+            android:layout_width="181dp"
+            android:layout_height="54dp"
+            android:layout_weight="1"
+            android:background="@drawable/list_button_back"
+            android:paddingRight="4dp"
+            android:paddingBottom="6dp"
+            android:text="격리자 상태 선택"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-    <SearchView
-        android:id="@+id/search_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_margin="4dp"
-        android:layout_weight="0.8"
-        android:focusableInTouchMode="true"
-        android:queryHint="@string/activity_managing_search_hint" />
+    <EditText
+        android:id="@+id/edit_search"
+        android:layout_width="358dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
+        android:drawableStart="?android:attr/actionModeWebSearchDrawable"
+        android:drawablePadding="4dp"
+        android:ems="10"
+        android:fontFamily="@font/noto_sans_bold"
+        android:hint="이름이나 주소로 검색"
+        android:inputType="textPersonName"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="361dp"
+        android:layout_height="13dp"
+        app:layout_constraintEnd_toEndOf="@+id/edit_search"
+        app:layout_constraintStart_toStartOf="@+id/edit_search"
+        app:layout_constraintTop_toBottomOf="@+id/edit_search"
+        app:srcCompat="@drawable/line" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="8dp"
-        android:gravity="center"
-        android:weightSum="5">
+        android:id="@+id/linearLayout2"
+        android:layout_width="361dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:weightSum="0.9"
+        app:layout_constraintEnd_toEndOf="@+id/imageView4"
+        app:layout_constraintStart_toStartOf="@+id/imageView4"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4">
 
         <TextView
-            android:id="@+id/name_txt"
+            android:id="@+id/textView6"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:paddingRight="2.5dp"
-            android:text="@string/header_name"
+            android:lineSpacingExtra="-2dp"
+            android:text="성명"
             android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/address_txt"
+            android:id="@+id/textView4"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:paddingLeft="2.5dp"
-            android:paddingRight="2.5dp"
-            android:text="@string/header_address"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
+            android:lineSpacingExtra="-2dp"
+            android:text="자가진단결과\n(오전 / 오후)"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/state_header"
+            android:id="@+id/textView5"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:paddingLeft="2.5dp"
+            android:layout_weight="0.3"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:text="@string/header_state"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="16sp" />
-
+            android:lineSpacingExtra="-2dp"
+            android:text="격리지역\n이탈여부"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp"
-        android:layout_weight="7.2"
-        android:focusableInTouchMode="true"
-        android:headerDividersEnabled="true" />
-</LinearLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

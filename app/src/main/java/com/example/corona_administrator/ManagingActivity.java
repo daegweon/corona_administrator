@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,10 +34,10 @@ import java.util.concurrent.TimeUnit;
 public class ManagingActivity extends AppCompatActivity {
 
     private PeopleListAdapter listAdapter;
-    private TextView numOfIsolated, stateHeader;
-    private SearchView searchView;
-    private Button myInformBtn, refreshBtn;
-    private RecyclerView peopleListView;
+    private TextView numOfIsolated, isolatedState;
+    private EditText searchText;
+    private RecyclerView listRecyclerView;
+    private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Toast mRefreshToast;
 
@@ -58,46 +59,57 @@ public class ManagingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        searchView.clearFocus();
+        searchText.clearFocus();
         runRefreshListThread();
     }
 
     private void initViews(){
-        numOfIsolated = findViewById(R.id.num_of_isolated);
-        stateHeader = findViewById(R.id.state_header);
+        numOfIsolated = findViewById(R.id.button_isolated);
+        isolatedState = findViewById(R.id.button_state);
 
-        searchView = findViewById(R.id.search_view);
-
-        myInformBtn = findViewById(R.id.myinform_btn);
-        refreshBtn = findViewById(R.id.refresh_btn);
+        searchText = findViewById(R.id.edit_search);
 
         listAdapter = new PeopleListAdapter(people);
 
-        peopleListView = findViewById(R.id.recycler_view);
-        peopleListView.setLayoutManager(new LinearLayoutManager(this));
-        peopleListView.setAdapter(listAdapter);
+        listRecyclerView = findViewById(R.id.list_recycler_view);
+        listRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        listRecyclerView.setAdapter(listAdapter);
+
+        mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
+        mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
     }
 
     private void setViewsListener() {
 
-        stateHeader.setOnClickListener(new View.OnClickListener() {
+        isolatedState.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchView.clearFocus();
+                searchText.clearFocus();
                 AlertDialog stateFilterDialog = getStateFilterDialog();
                 stateFilterDialog.show();
             }
         });
 
-        searchView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        searchText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                searchView.clearFocus();
+                searchText.clearFocus();
             }
         });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                runRefreshListThread();
+
+                mRefreshToast.cancel();
+                mRefreshToast.show();
+            }
+        });
+
+
+        /*searchText.setListen(new SearchView.OnQueryTextListener() {
             Filter textFilter = listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT);
 
             @Override
@@ -109,38 +121,10 @@ public class ManagingActivity extends AppCompatActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 textFilter.filter(query);
-                searchView.clearFocus();
+                searchText.clearFocus();
                 return false;
             }
-        });
-        searchView.setIconifiedByDefault(true);
-        searchView.setIconified(false);
-
-        //공무원 DB에서 정보 가져오는 걸로 수정 필요
-        Intent intent = getIntent();
-        final MyInformationDialog myInformationDialog = new MyInformationDialog(this, intent.getStringExtra("id"), intent.getStringExtra("name"), intent.getStringExtra("phone_num"));
-        myInformationDialog.setCancelable(true);
-        myInformBtn.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                myInformationDialog.show();
-            }
-        });
-
-
-        refreshBtn.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                searchView.clearFocus();
-                searchView.setQuery("", false);
-                runRefreshListThread();
-
-                if (mRefreshToast != null)
-                    mRefreshToast.cancel();
-                mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
-                mRefreshToast.show();
-            }
-        });
+        });*/
     }
 
     private AlertDialog getStateFilterDialog(){

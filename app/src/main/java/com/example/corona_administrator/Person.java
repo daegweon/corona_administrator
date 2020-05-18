@@ -78,16 +78,16 @@ public class Person {
         long timeDifference = currentTimeSec - timeLastStay;
 
         if (timeDifference <= 10 * 60){
-            stateTime = "10분 이하";
+            stateTime = ": 10분 이하";
         }
         else if (timeDifference > 10 * 60 && timeDifference <= 30 * 60){
-            stateTime = "10분 이상";
+            stateTime = ": 10분 이상";
         }
         else if (timeDifference > 30 * 60 && timeDifference <= 60 * 60){
-            stateTime = "30분 이상";
+            stateTime = ": 30분 이상";
         }
         else if (timeDifference > 60 * 60){
-            stateTime = "1시간 이상";
+            stateTime = ": 1시간 이상";
         }
     }
 

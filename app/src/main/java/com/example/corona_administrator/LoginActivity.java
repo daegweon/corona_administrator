@@ -21,7 +21,7 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button login_btn = findViewById(R.id.login_btn);
+        Button login_btn = findViewById(R.id.button_login);
         login_btn.setOnClickListener(this);
     }
 
@@ -33,10 +33,10 @@ public class LoginActivity extends AppCompatActivity implements Button.OnClickLi
 
     @Override
     public void onClick(View v) {
-        name = ((EditText)findViewById(R.id.name_editText)).getText().toString();
-        id = ((EditText)findViewById(R.id.id_editText)).getText().toString();
-        pw = ((EditText)findViewById(R.id.pw_editText)).getText().toString();
-        phone_num = ((EditText)findViewById(R.id.phone_editText)).getText().toString();
+        name = ((EditText)findViewById(R.id.edit_name)).getText().toString();
+        id = ((EditText)findViewById(R.id.edit_id)).getText().toString();
+        pw = ((EditText)findViewById(R.id.edit_password)).getText().toString();
+        phone_num = ((EditText)findViewById(R.id.edit_phone)).getText().toString();
 
 
         if (name.isEmpty() || id.isEmpty() || pw.isEmpty() || phone_num.isEmpty())

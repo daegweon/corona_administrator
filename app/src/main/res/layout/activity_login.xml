@@ -1,198 +1,221 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LoginActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FAFAFA"
-        tools:context=".MainActivity">
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="Pre SPI"
+        android:textColor="#606060"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.066" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="@string/app_name"
+        android:textColor="#606060"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.111" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_bold"
+        android:text="로그인"
+        android:textColor="#606060"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.695" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="263dp"
+        android:layout_height="263dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.053"
+        app:srcCompat="@drawable/icon" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3">
 
         <TextView
-            android:id="@+id/title_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@drawable/login_title_background"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:text="@string/activity_login_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="@android:color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.064" />
-
-
-        <TextView
-            android:id="@+id/login_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
-            android:gravity="center"
-            android:text="@string/activity_login_login"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text"
-            app:layout_constraintHorizontal_bias="0.5"
-            />
-
-
-        <ImageView
-            android:id="@+id/rect_img"
-            android:layout_width="50dp"
-            android:layout_height="4dp"
-            app:layout_constraintEnd_toEndOf="@+id/login_text"
-            app:layout_constraintStart_toStartOf="@+id/login_text"
-            app:layout_constraintTop_toBottomOf="@+id/login_text"
-            app:srcCompat="@drawable/login_rectangle" />
-
-
-        <TextView
-            android:id="@+id/name_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:layout_marginLeft="36dp"
-            android:text="@string/activity_login_name"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/login_text" />
-
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="성명"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/name_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
-            android:layout_marginRight="4dp"
-            android:background="@drawable/login_text_background"
+            android:id="@+id/edit_name"
+            android:layout_width="350dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/text_input_bg"
+            android:ems="10"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:hint="@string/activity_login_hint"
             android:inputType="textPersonName"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:text="김동현"
-            app:layout_constraintEnd_toEndOf="@+id/title_text"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/name_text"
-            app:layout_constraintTop_toBottomOf="@+id/name_text" />
+            android:nextFocusDown="@id/edit_id"
+            android:text="아무무"
+            android:textColor="#68aae6"
+            android:textStyle="bold" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout_id"
+        android:layout_width="wrap_content"
+        android:layout_height="78dp"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout_name"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout_name"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_name">
 
         <TextView
-            android:id="@+id/id_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/activity_login_id"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintStart_toStartOf="@+id/name_editText"
-            app:layout_constraintTop_toBottomOf="@+id/name_editText" />
-
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="전담공무원 ID"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/id_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_text_background"
+            android:id="@+id/edit_id"
+            android:layout_width="350dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/text_input_bg"
             android:ems="10"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:hint="@string/activity_login_password_hint"
-            android:inputType="textShortMessage"
-            android:maxLength="6"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:text="123456"
-            app:layout_constraintEnd_toEndOf="@+id/name_editText"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/id_text"
-            app:layout_constraintTop_toBottomOf="@+id/id_text" />
+            android:inputType="text"
+            android:nextFocusDown="@id/edit_password"
+            android:text="15-76086821"
+            android:textColor="#68aae6"
+            android:textStyle="bold" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout_pw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout_id"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout_id"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_id">
 
         <TextView
-            android:id="@+id/pw_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/activity_login_password"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintStart_toStartOf="@+id/id_editText"
-            app:layout_constraintTop_toBottomOf="@+id/id_editText" />
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="비밀번호"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/pw_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_text_background"
+            android:id="@+id/edit_password"
+            android:layout_width="350dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/text_input_bg"
             android:ems="10"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
             android:inputType="textPassword"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:text="123456"
-            app:layout_constraintEnd_toEndOf="@+id/id_editText"
-            app:layout_constraintStart_toStartOf="@+id/pw_text"
-            app:layout_constraintTop_toBottomOf="@+id/pw_text" />
+            android:nextFocusDown="@id/edit_phone"
+            android:text="Name"
+            android:textColor="#68aae6"
+            android:textStyle="bold" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/linearLayout_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout_pw"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout_pw"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_pw">
 
         <TextView
-            android:id="@+id/phone_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="@string/activity_login_phonenumber"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintStart_toStartOf="@+id/pw_editText"
-            app:layout_constraintTop_toBottomOf="@+id/pw_editText" />
-
+            android:fontFamily="@font/noto_sans_bold"
+            android:text="핸드폰 번호"
+            android:textColor="#606060"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/phone_editText"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_text_background"
+            android:id="@+id/edit_phone"
+            android:layout_width="350dp"
+            android:layout_height="51dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/text_input_bg"
             android:ems="10"
+            android:fontFamily="@font/noto_sans_bold"
             android:gravity="center"
-            android:hint="@string/activity_login_phonenumber_hint"
-            android:inputType="number|phone"
-            android:selectAllOnFocus="true"
-            android:singleLine="true"
-            android:text="01066652414"
-            app:layout_constraintBottom_toTopOf="@+id/login_btn"
-            app:layout_constraintEnd_toEndOf="@+id/pw_editText"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/phone_text"
-            app:layout_constraintTop_toBottomOf="@+id/phone_text" />
+            android:inputType="phone"
+            android:text="01029302818"
+            android:textColor="#68aae6"
+            android:textStyle="bold" />
+    </LinearLayout>
 
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="362dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/login_button_back"
+        android:fontFamily="@font/noto_sans_bold"
+        android:paddingRight="5dp"
+        android:paddingBottom="5dp"
+        android:text="로그인"
+        android:textColor="@color/login_button_color"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/linearLayout_phone"
+        app:layout_constraintStart_toStartOf="@+id/linearLayout_phone"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout_phone" />
 
-        <Button
-            android:id="@+id/login_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="52dp"
-            android:background="@drawable/login_btn_background"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:text="@string/activity_login_loginbutton"
-            android:textColor="#2E82DA"
-            app:layout_constraintEnd_toEndOf="@+id/phone_editText"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="@+id/phone_editText"
-            app:layout_constraintTop_toBottomOf="@+id/phone_editText" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
