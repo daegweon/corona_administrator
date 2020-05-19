@@ -25,24 +25,11 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
     final static int FILTER_BY_TEXT = 0;
     final static int FILTER_BY_STATE = 1;
 
-    private ArrayList<Person> unFilteredList;
-    private ArrayList<Person> filteredList;
+    private ArrayList<Person> list = new ArrayList<>();
 
-    private Context mContext;
+    private static Context mContext;
 
-    private SparseBooleanArray selectedPerson = new SparseBooleanArray();
-    private int prePosition = -1;
-
-    public PeopleListAdapter(ArrayList<Person> list){
-        super();
-        this.unFilteredList = list;
-        this.filteredList = list;
-    }
-
-    public void listRefresh(){
-        filteredList = unFilteredList;
-        selectedPerson.clear();
-    }
+    private static int selected = -1;
 
     @NonNull
     @Override
@@ -54,16 +41,25 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
     @Override
     public void onBindViewHolder(@NonNull PeopleItemViewHolder holder, int position) {
-        holder.bind(filteredList.get(position), position);
+        holder.bind(list.get(position), position);
     }
 
     @Override
     public int getItemCount() {
-        return filteredList.size();
+        return list.size();
     }
 
+    public void addItem(Person person){
+        list.add(person);
+    }
 
-    public Filter getFilter(final int filter) {
+    public void listRefresh(){
+        list.clear();
+        selected = -1;
+        //filteredList = unFilteredList;
+    }
+
+    /*public Filter getFilter(final int filter) {
         return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
@@ -111,7 +107,7 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
                 notifyDataSetChanged();
             }
         };
-    }
+    }*/
 
 
     class PeopleItemViewHolder extends RecyclerView.ViewHolder{
@@ -120,14 +116,15 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
 
         private ConstraintLayout details;
         private Button call, show_location;
+        private View mView;
 
         private Person mPerson;
-
-        private int position;
+        private int mPosition;
 
 
         public PeopleItemViewHolder(@NonNull View itemView) {
             super(itemView);
+            mView = itemView;
 
             name = itemView.findViewById(R.id.item_header_name);
             state = itemView.findViewById(R.id.item_header_state);
@@ -140,31 +137,12 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
             call = itemView.findViewById(R.id.item_details_call);
             show_location = itemView.findViewById(R.id.item_details_show_location);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (selectedPerson.get(position))
-                        selectedPerson.delete(position);
-                    else{
-                        selectedPerson.delete(prePosition);
-                        selectedPerson.put(position, true);
-                    }
-
-                    if (prePosition != -1) {
-                        notifyItemChanged(prePosition);
-                    }
-
-                    notifyItemChanged(position);
-
-                    prePosition = position;
-                }
-            });
+            setListeners();
         }
 
         public void bind(Person person, int position) {
-            this.mPerson = person;
-            this.position = position;
-
+            mPerson = person;
+            mPosition = position;
 
             name.setText(mPerson.getName());
             address.setText(mPerson.getAddress());
@@ -172,20 +150,27 @@ public class PeopleListAdapter extends RecyclerView.Adapter<PeopleListAdapter.Pe
             phone.setText(mPerson.getPhoneNumber());
             detail_state.setText(mPerson.getState() + mPerson.getStateTime());
 
-            setListeners();
-
-            if (selectedPerson.get(position))
+            if (selected == mPosition)
                 details.setVisibility(View.VISIBLE);
             else
                 details.setVisibility(View.GONE);
         }
 
         private void setListeners(){
+            mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    notifyItemChanged(selected);
+                    selected = mPosition;
+                    notifyItemChanged(mPosition);
+                }
+            });
+
             call.setOnClickListener(new Button.OnClickListener(){
 
                 @Override
                 public void onClick(View v) {
-                    Uri uri = Uri.parse("tel:" + Uri.encode(phone.getText().toString()));
+                    Uri uri = Uri.parse("tel:" + Uri.encode(mPerson.getPhoneNumber()));
                     mContext.startActivity(new Intent(Intent.ACTION_DIAL, uri));
                 }
             });

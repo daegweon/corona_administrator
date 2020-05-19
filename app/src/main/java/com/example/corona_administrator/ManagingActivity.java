@@ -40,11 +40,8 @@ public class ManagingActivity extends AppCompatActivity {
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Toast mRefreshToast;
-
-    //private Thread thrdRefreshPeopleList;
+    
     private GetPeopleListTask getPeopleListTask;
-
-    private ArrayList<Person> people = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +66,7 @@ public class ManagingActivity extends AppCompatActivity {
 
         searchText = findViewById(R.id.edit_search);
 
-        listAdapter = new PeopleListAdapter(people);
+        listAdapter = new PeopleListAdapter();
 
         listRecyclerView = findViewById(R.id.list_recycler_view);
         listRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -149,7 +146,7 @@ public class ManagingActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        listAdapter.getFilter(PeopleListAdapter.FILTER_BY_STATE).filter(stateQuery.getText().toString());
+                        //listAdapter.getFilter(PeopleListAdapter.FILTER_BY_STATE).filter(stateQuery.getText().toString());
                     }
                 })
 
@@ -166,9 +163,7 @@ public class ManagingActivity extends AppCompatActivity {
 
 
     private void runRefreshListThread () {
-        people.clear();
         listAdapter.listRefresh();
-
 
         getPeopleListTask = new GetPeopleListTask();
         getPeopleListTask.execute();
@@ -223,7 +218,7 @@ public class ManagingActivity extends AppCompatActivity {
 
                     person.setState();
 
-                    people.add(person);
+                    listAdapter.addItem(person);
                 }
 
 
@@ -239,7 +234,7 @@ public class ManagingActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             listAdapter.notifyDataSetChanged();
-            numOfIsolated.setText("자가격리자수 : " + String.valueOf(people.size()));
+            numOfIsolated.setText("자가격리자수 : " + String.valueOf(listAdapter.getItemCount()));
 
             mSwipeRefreshLayout.setRefreshing(false);
         }

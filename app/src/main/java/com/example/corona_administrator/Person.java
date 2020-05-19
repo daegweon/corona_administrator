@@ -9,8 +9,8 @@ public class Person {
     private static final String STATE_LOST_COMMUN = "통신안됨";
     private static final String STATE_LEFT = "이탈";
 
-    private static final long STAY_SENT_DIFF_MARGIN = 15;
-    private static final long STAY_CURRENT_DIFF_MARGIN = 10 * 60; //10mins
+    private static final long STAY_SENT_DIFF_MARGIN = 15; //15 secs
+    private static final long STAY_CURRENT_DIFF_MARGIN = 10 * 60; //10 mins
 
     private String name;
     private String address;
@@ -72,7 +72,7 @@ public class Person {
 
 
     private void setStateTime(long currentTimeSec) {
-        if (state.equals("정상"))
+        if (state.equals(STATE_NORMAL))
             return;
 
         long timeDifference = currentTimeSec - timeLastStay;
