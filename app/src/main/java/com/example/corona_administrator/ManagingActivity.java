@@ -76,7 +76,7 @@ public class ManagingActivity extends AppCompatActivity {
         listRecyclerView.setAdapter(listAdapter);
 
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
-        mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
+
     }
 
     private void setViewsListener() {
@@ -103,7 +103,10 @@ public class ManagingActivity extends AppCompatActivity {
             public void onRefresh() {
                 runRefreshListThread();
 
-                mRefreshToast.cancel();
+                if (mRefreshToast != null)
+                    mRefreshToast.cancel();
+
+                mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
                 mRefreshToast.show();
             }
         });
@@ -237,6 +240,8 @@ public class ManagingActivity extends AppCompatActivity {
         protected void onPostExecute(Void aVoid) {
             listAdapter.notifyDataSetChanged();
             numOfIsolated.setText("자가격리자수 : " + String.valueOf(people.size()));
+
+            mSwipeRefreshLayout.setRefreshing(false);
         }
     }
 }
