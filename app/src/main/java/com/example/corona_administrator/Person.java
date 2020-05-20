@@ -5,9 +5,9 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Person {
-    private static final String STATE_NORMAL = "정상";
-    private static final String STATE_LOST_COMMUN = "통신안됨";
-    private static final String STATE_LEFT = "이탈";
+    public static final String STATE_NORMAL = "정상";
+    public static final String STATE_LOST_COMMUN = "통신안됨";
+    public static final String STATE_LEFT = "이탈";
 
     private static final long STAY_SENT_DIFF_MARGIN = 15; //15 secs
     private static final long STAY_CURRENT_DIFF_MARGIN = 10 * 60; //10 mins

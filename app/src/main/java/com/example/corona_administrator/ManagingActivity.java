@@ -39,9 +39,7 @@ public class ManagingActivity extends AppCompatActivity {
     private RecyclerView listRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private Toast mRefreshToast;
-    
-    private GetPeopleListTask getPeopleListTask;
+    private Toast mToast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +71,6 @@ public class ManagingActivity extends AppCompatActivity {
         listRecyclerView.setAdapter(listAdapter);
 
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
-
     }
 
     private void setViewsListener() {
@@ -100,11 +97,11 @@ public class ManagingActivity extends AppCompatActivity {
             public void onRefresh() {
                 runRefreshListThread();
 
-                if (mRefreshToast != null)
-                    mRefreshToast.cancel();
+                if (mToast != null)
+                    mToast.cancel();
 
-                mRefreshToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
-                mRefreshToast.show();
+                mToast = Toast.makeText(getApplicationContext(), "새로고침 완료", Toast.LENGTH_SHORT);
+                mToast.show();
             }
         });
 
@@ -164,9 +161,7 @@ public class ManagingActivity extends AppCompatActivity {
 
     private void runRefreshListThread () {
         listAdapter.listRefresh();
-
-        getPeopleListTask = new GetPeopleListTask();
-        getPeopleListTask.execute();
+        new GetPeopleListTask().execute();
     }
 
     class GetPeopleListTask extends AsyncTask<Void, Void, Void>{
