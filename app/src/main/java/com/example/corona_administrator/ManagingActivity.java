@@ -2,21 +2,26 @@ package com.example.corona_administrator;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.example.corona_administrator.ListAdapter.FilterByStatus;
+import com.example.corona_administrator.ListAdapter.FilterByText;
+import com.example.corona_administrator.ListAdapter.PeopleListAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,19 +32,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 public class ManagingActivity extends AppCompatActivity {
+    private PeopleListAdapter mListAdapter;
 
-    private PeopleListAdapter listAdapter;
-    private TextView numOfIsolated, isolatedState;
-    private EditText searchText;
-    private RecyclerView listRecyclerView;
+    private TextView mID, mName, mPhone;
+    private Button mNumOfIsolatedBtn, mStateSelectBtn;
+    private SearchView mSearchView;
+    private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
     private Toast mToast;
+    private Filter mFilter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,41 +59,56 @@ public class ManagingActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        searchText.clearFocus();
+        mSearchView.clearFocus();
         runRefreshListThread();
     }
 
     private void initViews(){
-        numOfIsolated = findViewById(R.id.button_isolated);
-        isolatedState = findViewById(R.id.button_state);
+        mName = findViewById(R.id.text_name);
+        mID = findViewById(R.id.text_id);
+        mPhone = findViewById(R.id.text_phone);
 
-        searchText = findViewById(R.id.edit_search);
+        mName.setText("이름: " + Manager.getInstance().getName());
+        mID.setText("공무원 ID: " + Manager.getInstance().getID());
+        mPhone.setText("휴대폰 번호: " + Manager.getInstance().getPhone());
 
-        listAdapter = new PeopleListAdapter();
+        mNumOfIsolatedBtn = findViewById(R.id.button_isolated_num);
+        mStateSelectBtn = findViewById(R.id.button_state);
 
-        listRecyclerView = findViewById(R.id.list_recycler_view);
-        listRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        listRecyclerView.setAdapter(listAdapter);
+        mSearchView = findViewById(R.id.search);
+
+        mListAdapter = new PeopleListAdapter();
+
+        mRecyclerView = findViewById(R.id.list_recycler_view);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setAdapter(mListAdapter);
+        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
+                super.getItemOffsets(outRect, view, parent, state);
+                outRect.top = 30;
+            }
+        });
 
         mSwipeRefreshLayout = findViewById(R.id.swipe_refresh);
     }
 
     private void setViewsListener() {
 
-        isolatedState.setOnClickListener(new View.OnClickListener() {
+        mStateSelectBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                searchText.clearFocus();
+                mSearchView.clearFocus();
                 AlertDialog stateFilterDialog = getStateFilterDialog();
                 stateFilterDialog.show();
             }
         });
 
-        searchText.setOnFocusChangeListener(new View.OnFocusChangeListener(){
+        mSearchView.setOnFocusChangeListener(new View.OnFocusChangeListener(){
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                searchText.clearFocus();
+                mSearchView.clearFocus();
             }
         });
 
@@ -106,29 +126,34 @@ public class ManagingActivity extends AppCompatActivity {
         });
 
 
-        /*searchText.setListen(new SearchView.OnQueryTextListener() {
-            Filter textFilter = listAdapter.getFilter(PeopleListAdapter.FILTER_BY_TEXT);
-
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextChange(String newText) {
-                textFilter.filter(newText);
+                Log.d("Managing/newText: ", newText);
+                
+                if (mFilter == null || !(mFilter instanceof FilterByText))
+                    mFilter = new FilterByText(mListAdapter);
+
+                mFilter.filter(newText);
+
                 return false;
             }
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                textFilter.filter(query);
-                searchText.clearFocus();
+                onQueryTextChange(query);
+                mSearchView.clearFocus();
                 return false;
             }
-        });*/
+        });
+
     }
 
     private AlertDialog getStateFilterDialog(){
         AlertDialog.Builder stateFilterBuilder = new AlertDialog.Builder(ManagingActivity.this);
 
-        final String[] states = {"전체", "정상", "통신안됨", "이탈"};
-        final EditText stateQuery = new EditText(this);
+        final String[] states = {"전체", Person.STATE_NORMAL, Person.STATE_LOST_COMMUN, Person.STATE_LEFT};
+        final StringBuilder state = new StringBuilder(states[0]);
 
         stateFilterBuilder
                 .setTitle("격리자 상태 선택")
@@ -136,14 +161,19 @@ public class ManagingActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        stateQuery.setText(states[which]);
+                        //Log.d("AlertDialog", "Clicked: " + String.valueOf(which));
+                        state.delete(0, state.length());
+                        state.append(states[which]);
                     }
                 })
                 .setPositiveButton(R.string.ok, new AlertDialog.OnClickListener(){
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //listAdapter.getFilter(PeopleListAdapter.FILTER_BY_STATE).filter(stateQuery.getText().toString());
+                        if (mFilter == null || !(mFilter instanceof FilterByStatus))
+                            mFilter = new FilterByStatus(mListAdapter);
+
+                        mFilter.filter(state);
                     }
                 })
 
@@ -160,7 +190,7 @@ public class ManagingActivity extends AppCompatActivity {
 
 
     private void runRefreshListThread () {
-        listAdapter.listRefresh();
+        mListAdapter.listRefresh();
         new GetPeopleListTask().execute();
     }
 
@@ -203,7 +233,7 @@ public class ManagingActivity extends AppCompatActivity {
 
                     Person person = new Person();
 
-                    //need to set birthDate, State
+                    //need to set birthDate
                     person.setName(jsonPerson.getString("name"));
                     person.setAddress(jsonPerson.getString("addr") /*+ ", " + jsonPerson.getString("addr_detail")*/);
                     person.setZipCode(jsonPerson.getString("zip_code"));
@@ -213,7 +243,7 @@ public class ManagingActivity extends AppCompatActivity {
 
                     person.setState();
 
-                    listAdapter.addItem(person);
+                    mListAdapter.addItem(person);
                 }
 
 
@@ -228,8 +258,8 @@ public class ManagingActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            listAdapter.notifyDataSetChanged();
-            numOfIsolated.setText("자가격리자수 : " + String.valueOf(listAdapter.getItemCount()));
+            mListAdapter.notifyDataSetChanged();
+            mNumOfIsolatedBtn.setText("자가격리자수 : " + String.valueOf(mListAdapter.getItemCount()));
 
             mSwipeRefreshLayout.setRefreshing(false);
         }
