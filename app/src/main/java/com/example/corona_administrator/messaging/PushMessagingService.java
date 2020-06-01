@@ -35,7 +35,7 @@ public class PushMessagingService extends FirebaseMessagingService {
 
         HttpURLConnection conn = null;
         try{
-            conn = (HttpURLConnection)new URL("http://143.248.53.50:8000/api/register_manager").openConnection();
+            conn = (HttpURLConnection)new URL("http://143.248.53.196:8000/api/register_manager").openConnection();
             conn.setRequestMethod("POST");
             conn.setConnectTimeout(500);
             conn.setDoOutput(true);
