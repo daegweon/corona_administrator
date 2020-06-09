@@ -1,10 +1,22 @@
 package com.example.corona_administrator;
 
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
+
 import android.graphics.Rect;
+
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+
+import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +27,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -33,9 +46,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
+
+
 
 public class ManagingActivity extends AppCompatActivity {
     private PeopleListAdapter mListAdapter;
+
 
     private TextView mID, mName, mPhone;
     private Button mNumOfIsolatedBtn, mStateSelectBtn;
@@ -43,8 +63,33 @@ public class ManagingActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
+
+    private int numOfAbnormal;
+    private int numOflessthanten;
+    private int numOfmorethanten;
+    private int numOfmorethanthirty;
+    private int numOfmorethanhour;
+
+
+
+    private PeopleListAdapter listAdapter;
+    private TextView numOfIsolated, stateHeader;
+    private SearchView searchView;
+    private Button myInformBtn, refreshBtn;
+    private RecyclerView peopleListView;
+
+    private Toast mRefreshToast;
+
+    //private Thread thrdRefreshPeopleList;
+    private GetPeopleListTask getPeopleListTask;
+
     private Toast mToast;
     private Filter mFilter;
+
+    // refresh?
+    Timer jobScheduler = new Timer();
+    Refresh refresher = new Refresh();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +98,9 @@ public class ManagingActivity extends AppCompatActivity {
 
         initViews();
         setViewsListener();
+        // refresh? every 30 seconds
+        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
+
     }
 
     @Override
@@ -188,10 +236,28 @@ public class ManagingActivity extends AppCompatActivity {
         return stateFilterBuilder.create();
     }
 
+    // Timer Task
+    class Refresh extends TimerTask {
+        public void run(){
+            runRefreshListThread();
+
+        }
+
+    }
+
 
     private void runRefreshListThread () {
         mListAdapter.listRefresh();
         new GetPeopleListTask().execute();
+
+        NotificationSomethings(numOfAbnormal, numOflessthanten, numOfmorethanten, numOfmorethanthirty, numOfmorethanhour);
+
+        numOfAbnormal = 0;
+        numOflessthanten = 0;
+        numOfmorethanten = 0;
+        numOfmorethanthirty = 0;
+        numOfmorethanhour = 0;
+
     }
 
     class GetPeopleListTask extends AsyncTask<Void, Void, Void>{
@@ -244,6 +310,23 @@ public class ManagingActivity extends AppCompatActivity {
                     person.setState();
 
                     mListAdapter.addItem(person);
+
+
+                    if(!person.getState().equals("정상")){
+                        numOfAbnormal += 1;
+                        if(person.getStateTime().equals("10분 이하")){
+                            numOflessthanten += 1;
+                        }
+                        else if(person.getStateTime().equals("10분 이상")){
+                            numOfmorethanten += 1;
+                        }
+                        else if(person.getStateTime().equals("30분 이상")){
+                            numOfmorethanthirty += 1;
+                        }
+                        else{
+                            numOfmorethanhour += 1;
+                        }
+                    }
                 }
 
 
@@ -264,4 +347,56 @@ public class ManagingActivity extends AppCompatActivity {
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }
+
+
+    public void NotificationSomethings(int numofabnormal, int numoflessthanten, int numofmorethanten, int numofmorethanthirty, int numofmorethanhour) {
+
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+
+        String title = Integer.toString(numofabnormal).concat("명 비정상 상태");
+
+        String text = "1시간 이상:    ".concat(Integer.toString(numofmorethanhour)).concat("명\n 30분 이상 1시간 미만:    ").concat(Integer.toString(numofmorethanthirty))
+                .concat("명\n10분 이상 30분 미만:    ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만:    ").concat(Integer.toString(numoflessthanten)).concat("명");
+
+        // pending intent part start
+        //Intent notificationIntent = new Intent(this, ManagingActivity.class);
+        //notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
+        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
+        // pending intent part end
+
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
+                .setContentTitle(title)
+                .setContentText("세부사항 드래그해서 보기")
+                // 더 많은 내용이라서 일부만 보여줘야 하는 경우 아래 주석을 제거하면 setContentText에 있는 문자열 대신 아래 문자열을 보여줌
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setDefaults(NotificationCompat.DEFAULT_ALL)
+                .setAutoCancel(true);
+
+        //OREO API 26 이상에서는 채널 필요
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            builder.setSmallIcon(R.drawable.ic_launcher_foreground); //mipmap 사용시 Oreo 이상에서 시스템 UI 에러남
+            CharSequence channelName  = "노티페케이션 채널";
+            String description = "오레오 이상을 위한 것임";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel channel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, channelName , importance);
+            channel.setDescription(description);
+
+            // 노티피케이션 채널을 시스템에 등록
+            assert notificationManager != null;
+            notificationManager.createNotificationChannel(channel);
+
+        }
+
+        assert notificationManager != null;
+        notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
+
+    }
+
+
 }
