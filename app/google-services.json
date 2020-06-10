@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "576338426193",
+    "firebase_url": "https://prespi-fcm.firebaseio.com",
+    "project_id": "prespi-fcm",
+    "storage_bucket": "prespi-fcm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:576338426193:android:dc6f086993998c2af5fb70",
+        "android_client_info": {
+          "package_name": "com.example.corona_administrator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "576338426193-se2kk1kvk08v23ncqltm9n3gihqlihil.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.corona_administrator",
+            "certificate_hash": "140c1783ff4e2cfccb0aeff46cbeb5989c8a2971"
+          }
+        },
+        {
+          "client_id": "576338426193-bdfpnfr97uatlgrl790li9kphs19oo54.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZCEO3RJ_U9nXcG0Aqy5cKUsaNJVHzOQo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "576338426193-bdfpnfr97uatlgrl790li9kphs19oo54.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

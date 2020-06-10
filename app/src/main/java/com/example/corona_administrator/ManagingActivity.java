@@ -1,11 +1,19 @@
 package com.example.corona_administrator;
 
 import android.app.AlertDialog;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
+
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 
 import android.graphics.Rect;
 
@@ -27,7 +35,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.core.app.NotificationCompat;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -35,6 +47,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.corona_administrator.ListAdapter.FilterByStatus;
 import com.example.corona_administrator.ListAdapter.FilterByText;
 import com.example.corona_administrator.ListAdapter.PeopleListAdapter;
+import com.example.corona_administrator.messaging.PushMessagingService;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,9 +100,34 @@ public class ManagingActivity extends AppCompatActivity {
     private Toast mToast;
     private Filter mFilter;
 
+
     // refresh?
     Timer jobScheduler = new Timer();
     Refresh refresher = new Refresh();
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String title = intent.getStringExtra("TITLE");
+            String body = intent.getStringExtra("BODY");
+            Log.d("ManagingActivity", "mMessageReceiver: " + title + " / " + body);
+
+            runRefreshListThread();
+            mToast = Toast.makeText(getApplicationContext(), "refresh from FCM", Toast.LENGTH_SHORT);
+            mToast.show();
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(
+                mMessageReceiver,
+                new IntentFilter(PushMessagingService.ACTION_MSG_FROM_SERVER)
+        );
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
