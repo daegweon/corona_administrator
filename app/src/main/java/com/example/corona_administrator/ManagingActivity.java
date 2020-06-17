@@ -137,17 +137,8 @@ public class ManagingActivity extends AppCompatActivity {
         initViews();
         setViewsListener();
 
-        if (savedInstanceState == null) {
-            Bundle extras = getIntent().getExtras();
-            if(extras == null)
-            {
-                //not being clicked on
-                // refresh? every 30 seconds
-                jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
-            }
-        }
-
-
+        // refresh? every 30 seconds
+        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
 
     }
 
