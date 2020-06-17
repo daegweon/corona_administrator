@@ -136,8 +136,18 @@ public class ManagingActivity extends AppCompatActivity {
 
         initViews();
         setViewsListener();
-        // refresh? every 30 seconds
-        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
+
+        if (savedInstanceState == null) {
+            Bundle extras = getIntent().getExtras();
+            if(extras == null)
+            {
+                //not being clicked on
+                // refresh? every 30 seconds
+                jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
+            }
+        }
+
+
 
     }
 
@@ -403,6 +413,10 @@ public class ManagingActivity extends AppCompatActivity {
         //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
         // pending intent part end
 
+        Intent intent = new Intent(this, ManagingActivity.class);
+        intent.putExtra("NotiClick",true);
+        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher_foreground)) //BitMap 이미지 요구
@@ -412,7 +426,8 @@ public class ManagingActivity extends AppCompatActivity {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setAutoCancel(true);
+                .setAutoCancel(true)
+                .setContentIntent(pIntent);
 
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
