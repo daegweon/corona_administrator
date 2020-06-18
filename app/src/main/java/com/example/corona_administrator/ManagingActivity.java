@@ -24,6 +24,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Handler;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.Log;
 import android.view.View;
@@ -59,10 +61,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
+//import java.util.ArrayList;
+//import java.util.TimerTask;
+//import java.util.concurrent.TimeUnit;
 
 
 
@@ -101,9 +102,19 @@ public class ManagingActivity extends AppCompatActivity {
     private Filter mFilter;
 
 
+    private static Handler timerHandler = new Handler();
+
     // refresh?
-    Timer jobScheduler = new Timer();
-    Refresh refresher = new Refresh();
+    private Runnable mRunRefresh = new Runnable() {
+        @Override
+        public void run() {
+            runRefreshListThread();
+        }
+    };
+
+    private static final int REFRESH_PERIOD = 30000;
+
+    //runRefreshListThread();
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -131,14 +142,13 @@ public class ManagingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_managing);
 
         initViews();
         setViewsListener();
 
-        // refresh? every 30 seconds
-        jobScheduler.scheduleAtFixedRate(refresher, 30000, 30000);
 
     }
 
@@ -149,6 +159,13 @@ public class ManagingActivity extends AppCompatActivity {
         mSearchView.clearFocus();
         runRefreshListThread();
     }
+
+    //@Override
+    //protected void onStop() {
+    //    super.onStop();
+
+    //    timerHandler.removeCallbacks(mRunRefresh);
+    //}
 
     private void initViews(){
         mName = findViewById(R.id.text_name);
@@ -275,17 +292,11 @@ public class ManagingActivity extends AppCompatActivity {
         return stateFilterBuilder.create();
     }
 
-    // Timer Task
-    class Refresh extends TimerTask {
-        public void run(){
-            runRefreshListThread();
-
-        }
-
-    }
-
 
     private void runRefreshListThread () {
+        //timerHandler.removeCallbacks(mRunRefresh);
+        timerHandler.removeCallbacksAndMessages(null);
+
         mListAdapter.listRefresh();
         new GetPeopleListTask().execute();
 
@@ -297,6 +308,7 @@ public class ManagingActivity extends AppCompatActivity {
         numOfmorethanthirty = 0;
         numOfmorethanhour = 0;
 
+        timerHandler.postDelayed(mRunRefresh, REFRESH_PERIOD);
     }
 
     class GetPeopleListTask extends AsyncTask<Void, Void, Void>{
@@ -398,15 +410,10 @@ public class ManagingActivity extends AppCompatActivity {
         String text = "1시간 이상:    ".concat(Integer.toString(numofmorethanhour)).concat("명\n 30분 이상 1시간 미만:    ").concat(Integer.toString(numofmorethanthirty))
                 .concat("명\n10분 이상 30분 미만:    ").concat(Integer.toString(numofmorethanten)).concat("명\n10분 미만:    ").concat(Integer.toString(numoflessthanten)).concat("명");
 
-        // pending intent part start
-        //Intent notificationIntent = new Intent(this, ManagingActivity.class);
-        //notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK) ;
-        //PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, notificationIntent,  PendingIntent.FLAG_UPDATE_CURRENT);
-        // pending intent part end
 
-        Intent intent = new Intent(this, ManagingActivity.class);
-        intent.putExtra("NotiClick",true);
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        //Intent intent = new Intent(this, ManagingActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        //PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
@@ -417,8 +424,8 @@ public class ManagingActivity extends AppCompatActivity {
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(text))
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
-                .setAutoCancel(true)
-                .setContentIntent(pIntent);
+                .setAutoCancel(true);
+                //.setContentIntent(pIntent);
 
         //OREO API 26 이상에서는 채널 필요
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -441,6 +448,7 @@ public class ManagingActivity extends AppCompatActivity {
         notificationManager.notify(1234, builder.build()); // 고유숫자로 노티피케이션 동작시킴
 
     }
+
 
 
 }
